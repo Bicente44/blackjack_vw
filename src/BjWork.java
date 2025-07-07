@@ -67,8 +67,9 @@ public class BjWork {
 //		Split
 		case 4:
 			break;
-			default:
-				break;
+		default:
+			System.out.println("Invalid please pick a number between (1 - 4)\n");
+			break;
 			
 		}
 		
