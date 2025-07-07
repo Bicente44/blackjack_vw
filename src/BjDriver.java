@@ -1,17 +1,30 @@
-
 /*
  * Program created by Vincent Welbourne
- * Code description:
- * 
+ * vincent.vw04@gmail.com
+ * Code description: This is a recreation of the famous card game called 'Blackjack' i have implemented my own
+ * variation and twist of the rules for this program for more information you may contact me through my email or
+ * for more information on the game go to help section.
  * 
  */
-//import javax.swing.*;
+//import javax.swing.*; //May implement in the future for a graphical UI on the screen instead of gameplay.
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * This class works as the main menu of the Blackjack card game
+ * 
+ * @author Vincent Welbourne
+ */
 public class BjDriver {
 	private static boolean LOOP = true;
 
+	/**
+	 * This is where the game starts you get options from start game, help and exit.
+	 * Checks if its the first game or if out of cards to initialize a deck and or
+	 * shuffle.
+	 * 
+	 * @param args no commandline arguments
+	 */
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		int roundsPlayed = 0;
@@ -26,10 +39,11 @@ public class BjDriver {
 				switch (option) {
 				// 1. Call to BjWork class and start a new hand
 				case 1:
-					if (roundsPlayed == 0) { //Initialize decks if its first round
+					if (roundsPlayed == 0) { // Initialize decks if its first round
 						Shuffle.shuffle(roundsPlayed);
 					} /*
-						 * else if (out of cards) { Shuffle.shuffle(roundsPlayed); } */
+						 * else if (out of cards) { Shuffle.shuffle(roundsPlayed); }
+						 */
 
 					// TODO: add game logic so call onto BjWork System.out.println();
 					roundsPlayed++;
@@ -39,7 +53,7 @@ public class BjDriver {
 					System.out.println("");// TODO: Give basic menu help and make it give an option for further
 											// instruction like how to play and basic strategy
 					// CASE 1 how to play
-					// CASE 2 bj basic strategy
+					// CASE 2 bj basic strategy sheet
 					break;
 				// 3. Exit Program
 				case 3:
@@ -69,6 +83,9 @@ public class BjDriver {
 }
 
 /*
+ *
+ * THIS is for potential UI in the future.
+ * 
  * //Welcome to blackjack int startResponse =
  * JOptionPane.showConfirmDialog(null,
  * "Welcome to Blackjack! Would you like to play a new hand?", "Game Master",

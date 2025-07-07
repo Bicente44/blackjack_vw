@@ -1,10 +1,13 @@
-
+/*
+ * Program created by Vincent Welbourne
+ * vincent.vw04@gmail.com
+ * 
+ */
 import java.util.LinkedList;
 
 /**
  *
  * This Class is the deck of cards array and object.
- *
  * A deck consists of 4 arrays with the types: Clubs, Spades, Diamonds, Hearts.
  *
  * @author Vincent Welbourne
@@ -26,6 +29,8 @@ public class Deck {
 
     /**
      * Assigning each card its value
+     *
+     * @param numOfDecks
      */
     public Deck(int numOfDecks) {
         deck = new LinkedList<>(); // making the array the proper size for the amount of decks
@@ -38,9 +43,10 @@ public class Deck {
             }
         }
     }
-
     /**
      * Returns the full deck as a LinkedList.
+     * 
+     * @return
      */
     public LinkedList<String> getDeck() {
         return deck;

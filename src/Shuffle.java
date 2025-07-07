@@ -1,4 +1,8 @@
-
+/*
+ * Program created by Vincent Welbourne
+ * vincent.vw04@gmail.com
+ * 
+ */
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -42,7 +46,7 @@ public class Shuffle {
 		
 		// shuffle the deck	
 		Collections.shuffle(deckList);
-		
+		keyboard.close();
 		return deckList;
 
 	}
