@@ -17,7 +17,7 @@ public class Shuffle {
 	 * @param roundsPlayed
 	 * @return null
 	 */
-	public static String shuffle(int roundsPlayed) {
+	public static List<String> shuffle(int roundsPlayed) {
 		Scanner keyboard = new Scanner(System.in);
 		int numOfDecks = 1;
 
