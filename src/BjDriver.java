@@ -6,7 +6,6 @@
  * for more information on the game go to help section.
  * 
  */
-//import javax.swing.*; //May implement in the future for a graphical UI on the screen instead of gameplay.
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -82,15 +81,4 @@ public class BjDriver {
 	}
 }
 
-/*
- *
- * THIS is for potential UI in the future.
- * 
- * //Welcome to blackjack int startResponse =
- * JOptionPane.showConfirmDialog(null,
- * "Welcome to Blackjack! Would you like to play a new hand?", "Game Master",
- * JOptionPane.YES_NO_OPTION);
- * 
- * //Player input is no if (startResponse != JOptionPane.YES_OPTION) {
- * JOptionPane.showMessageDialog(null, "Closing the program..."); return; }
- */
+
