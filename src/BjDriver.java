@@ -41,7 +41,10 @@ public class BjDriver {
 					if (roundsPlayed == 0) { // Initialize decks if its first round
 						Shuffle.shuffle(roundsPlayed);
 					} /*
-						 * else if (out of cards) { Shuffle.shuffle(roundsPlayed); }
+						 * else if (out of cards) { 
+						 * Shuffle.shuffle(roundsPlayed); 
+						 * cards == 0;
+						 * }
 						 */
 
 					// TODO: add game logic so call onto BjWork System.out.println();
