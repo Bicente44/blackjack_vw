@@ -14,6 +14,34 @@ import java.util.LinkedList;
  */
 public class Deck {
 
+	
+
+
+	public class Diamonds extends Card {
+		private String suit;	// Clubs, Diamonds etc..
+		private int value;		// Worth of the card
+		private String rank; 	// Ace, 2, king etc..
+	}
+	
+	public class Hearts extends Card {
+		private String suit;	// Clubs, Diamonds etc..
+		private int value;		// Worth of the card
+		private String rank; 	// Ace, 2, king etc..
+	}
+	
+	public class Spades extends Card {
+		private String suit;	// Clubs, Diamonds etc..
+		private int value;		// Worth of the card
+		private String rank; 	// Ace, 2, king etc..
+	}
+	
+	public class Clubs extends Card {
+		private String suit;	// Clubs, Diamonds etc..
+		private int value;		// Worth of the card
+		private String rank; 	// Ace, 2, king etc..
+	}
+
+	
     /**
      * Card suit array.
      */

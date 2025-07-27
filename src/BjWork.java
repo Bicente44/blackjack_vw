@@ -57,7 +57,7 @@ public class BjWork {
 
 	/**
 	 * Method used to call when you want to get playing options,
-	 * (Hit, Stand, Double and Split) --Eventually add surrender
+	 * (Hit, Stand, Double and Split) --Eventually add surrender and insurance
 	 * 
 	 */
 	public void gameActions() {
