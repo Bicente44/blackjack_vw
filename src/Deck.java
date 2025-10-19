@@ -3,6 +3,7 @@
  * vincent.vw04@gmail.com
  *
  */
+
 import java.util.LinkedList;
 
 /**
@@ -14,69 +15,104 @@ import java.util.LinkedList;
  */
 public class Deck {
 
-
-
-
-    public class Diamonds extends Card {
-        private String suit;	// Clubs, Diamonds etc..
-        private int value;		// Worth of the card
-        private String rank; 	// Ace, 2, king etc..
+    public static class Diamonds extends Card {
+        public Diamonds(String rank, int value) {
+            super(value, "Diamonds", rank);
+        }
     }
 
-    public class Hearts extends Card {
-        private String suit;	// Clubs, Diamonds etc..
-        private int value;		// Worth of the card
-        private String rank; 	// Ace, 2, king etc..
+    public static class Hearts extends Card {
+        public Hearts(String rank, int value) {
+            super(value, "Hearts", rank);
+        }
     }
 
-    public class Spades extends Card {
-        private String suit;	// Clubs, Diamonds etc..
-        private int value;		// Worth of the card
-        private String rank; 	// Ace, 2, king etc..
+    public static class Spades extends Card {
+        public Spades(String rank, int value) {
+            super(value, "Spades", rank);
+        }
     }
 
-    public class Clubs extends Card {
-        private String suit;	// Clubs, Diamonds etc..
-        private int value;		// Worth of the card
-        private String rank; 	// Ace, 2, king etc..
+    public static class Clubs extends Card {
+        public Clubs(String rank, int value) {
+            super(value, "Clubs", rank);
+        }
     }
 
 
-    /**
-     * Card suit array.
-     */
-    private final String[] SUITS = {"Clubs", "Spades", "Diamonds", "Hearts"}; // 4
-    /**
-     * Card rank array.
-     */
-    private final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}; // 13
     /**
      * LinkedList deck containing all cards.
      */
-    private LinkedList<String> deck;
+    private final LinkedList<Card> deck;
 
     /**
      * Assigning each card its value
      *
-     * @param numOfDecks
+     * @param numOfDecks number of decks chosen by the user.
      */
     public Deck(int numOfDecks) {
-        deck = new LinkedList<>(); // making the array the proper size for the amount of decks
+        deck = new LinkedList<>();
 
         for (int i = 0; i < numOfDecks; i++) {
+            /**
+             * Card suit array.
+             */
+            String[] SUITS = {"Clubs", "Spades", "Diamonds", "Hearts"}; // 4
+
             for (String suit : SUITS) {
+                /**
+                 * Card rank array.
+                 */
+                String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}; // 13
                 for (String rank : RANKS) {
-                    deck.add(rank + " of " + suit);
+                    int value = getValue(rank);
+                    switch (suit) {
+                        case "Clubs":
+                            deck.add(new Clubs(rank, value));
+                            break;
+                        case "Spades":
+                            deck.add(new Spades(rank, value));
+                            break;
+                        case "Diamonds":
+                            deck.add(new Diamonds(rank, value));
+                            break;
+                        case "Hearts":
+                            deck.add(new Hearts(rank, value));
+                            break;
+                        default:
+                            // shouldn't happen
+                            break;
+                    }
                 }
             }
         }
     }
+
     /**
-     * Returns the full deck as a LinkedList.
-     *
-     * @return
+     * Takes the rank and converts it to its numerical value
+     * @param rank of card
+     * @return value of card
      */
-    public LinkedList<String> getDeck() {
+    private static int getValue(String rank) {
+        switch (rank) {
+            case "Ace":
+                return 11;
+            case "Jack", "Queen", "King":
+                return 10;
+            default:
+                try {
+                    return Integer.parseInt(rank);
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+        }
+    }
+
+    /**
+     * Returns the full deck as a LinkedList of Card objects.
+     * @return deck
+     */
+    public LinkedList<Card> getDeck() {
         return deck;
     }
 }
