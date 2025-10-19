@@ -19,7 +19,7 @@ public class BjDriver {
 
     /**
      * This is where the game starts you get options from start game, help and exit.
-     * Checks if its the first game or if out of cards to initialize a deck and or
+     * Checks if it's the first game or if out of cards to initialize a deck and or
      * shuffle.
      *
      * @param args no commandline arguments
@@ -28,14 +28,16 @@ public class BjDriver {
         Scanner keyboard = new Scanner(System.in);
         int roundsPlayed = 0;
 
-        System.out.println("Welcome to BlackJack\n" + "Would you like to play a new hand?\n");
+        System.out.println("Welcome to BlackJack\n");
         do {
             try {
-
-                System.out.println("Options are: 1. (Yes), 2. (Help), 3. (No, exit).");
+                System.out.println("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n");
                 int option = keyboard.nextInt();
 
                 switch (option) {
+                    //TODO: Fix this because it will always shuffle or just break when you still have cards but not first game
+                    //TODO: Make after else if out of cards, else play blackjack
+
                     // 1. Call to BjWork class and start a new hand
                     case 1:
                         if (roundsPlayed == 0) { // Initialize decks if its first round
@@ -52,7 +54,7 @@ public class BjDriver {
                         break;
                     // 2. Help menu
                     case 2:
-                        System.out.println("");// TODO: Give basic menu help and make it give an option for further
+                        System.out.println("\nThis is how you play the game");// TODO: Give basic menu help and make it give an option for further
                         // instruction like how to play and basic strategy
                         // CASE 1 how to play
                         // CASE 2 bj basic strategy sheet
@@ -72,7 +74,7 @@ public class BjDriver {
         } while (LOOP);
         System.out.println("You played a total of: " + roundsPlayed + " round(s)!");
         if (roundsPlayed > 35)
-            System.out.println(".. wow you might have a problem take a break..");
+            System.out.println(".. wow you might have a problem you should take a break..");
         System.out.println("");
 
         System.out.println("Thank you for using my program!");
