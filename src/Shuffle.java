@@ -21,18 +21,16 @@ public class Shuffle {
      * @param roundsPlayed
      * @return null
      */
-    public static List<String> shuffle(int roundsPlayed) {
+    public static List<Card> shuffle(int roundsPlayed) {
         Scanner keyboard = new Scanner(System.in);
         int numOfDecks = 1;
 
         if (roundsPlayed == 0) {
-
             System.out.println("How many decks would you like to play with?");
             do {
                 try {
                     System.out.println("You may choose a number from 1-8.");
                     numOfDecks = keyboard.nextInt();
-
                     break;
                 } catch (Exception e) {
                     System.out.println("Please enter a valid number!");
@@ -40,13 +38,12 @@ public class Shuffle {
                 }
             } while (true);
         }
-
         Deck deck = new Deck(numOfDecks);
-        List<String> deckList = deck.getDeck();
-
+        List<Card> deckList = deck.getDeck();
+        System.out.println(deckList);
         // shuffle the deck
         Collections.shuffle(deckList);
-        keyboard.close();
+        System.out.println(deckList);
         return deckList;
 
     }
