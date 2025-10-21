@@ -6,6 +6,7 @@
  * for more information on the game go to help section.
  *
  */
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,6 +17,9 @@ import java.util.Scanner;
  */
 public class BjDriver {
     private static boolean LOOP = true;
+    public static int roundsPlayed = 0;
+    public static boolean noCards = true;
+    public static String playerName = "Player";
 
     /**
      * This is where the game starts you get options from start game, help and exit.
@@ -26,38 +30,68 @@ public class BjDriver {
      */
     public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
-        int roundsPlayed = 0;
+
 
         System.out.println("Welcome to BlackJack\n");
+        System.out.print("Enter your name (Optional)\n" + "> ");
+        playerName = keyboard.nextLine();
+        if (playerName.isEmpty()) {
+            playerName = "Player";
+        }
         do {
             try {
-                System.out.println("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n");
+                System.out.print("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
                 int option = keyboard.nextInt();
 
                 switch (option) {
-                    //TODO: Fix this because it will always shuffle or just break when you still have cards but not first game
-                    //TODO: Make after else if out of cards, else play blackjack
 
                     // 1. Call to BjWork class and start a new hand
                     case 1:
-                        if (roundsPlayed == 0) { // Initialize decks if its first round
-                            Shuffle.shuffle(roundsPlayed);
-                        } /*
-                         * else if (out of cards) {
-                         * Shuffle.shuffle(roundsPlayed);
-                         * cards == 0;
-                         * }
-                         */
-
-                        // TODO: add game logic so call onto BjWork System.out.println();
+                        if (roundsPlayed == 0 || noCards) { // Initialize decks if its first round or if you have no cards
+                            BjWork.deck = Shuffle.shuffle();
+                            BjWork.game();
+                        } else {
+                            BjWork.game();
+                        }
                         roundsPlayed++;
                         break;
                     // 2. Help menu
                     case 2:
-                        System.out.println("\nThis is how you play the game");// TODO: Give basic menu help and make it give an option for further
-                        // instruction like how to play and basic strategy
-                        // CASE 1 how to play
-                        // CASE 2 bj basic strategy sheet
+                        boolean inHelp = true;
+                        while (inHelp) {
+                            System.out.print("Enter '1' to learn how to play, Basic strategy sheet '2' or 3 to exit help menu.\n" + "> ");
+                            try {
+                                int helpOption = keyboard.nextInt();
+                                switch (helpOption) {
+                                    case 1:
+                                        System.out.println("Blackjack is a simple card game where your only opponent is the dealer.\n" +
+                                                "Your goal is to beat the dealer, you can do this by simply having more cards then the dealer, or if the dealer 'busts'\n" +
+                                                "'bust' in Blackjack means you have greater then 21 cards, you may also lose this way.\n" +
+                                                "The point of the game is to have a total card value closest to 21 without busting or greater then the dealer\n" +
+                                                "You may lose if you 'bust' and the dealer has more cards then you.\n" +
+                                                "If you have a tie in card value its a 'Stand', it means you get to play again and keep your bets\n" +
+                                                "The dealer MUST stand at 17 and up, you may draw as many cards as you desire.\n" +
+                                                "Hit = draw a card\n" +
+                                                "Stand = you wish to no longer draw cards and see the hidden dealer card\n" +
+                                                "Double = you double your placed bet and you have to draw 1 last card\n");
+                                        break;
+                                    case 2:
+                                        System.out.println("i might actually write it down one day..\n" +
+                                                "for now you just get the link:\n" +
+                                                "https://www.blackjackapprenticeship.com/blackjack-strategy-charts/\n");
+                                        break;
+                                    case 3:
+                                        System.out.println("Exiting help menu..\n");
+                                        inHelp = false;
+                                        break;
+                                    default:
+                                        System.out.println("Invalid number, options are from 1-3!");
+                                }
+                            } catch (InputMismatchException ime) {
+                                System.out.println("Please enter a valid number");
+                                keyboard.nextLine();
+                            }
+                        }
                         break;
                     // 3. Exit Program
                     case 3:
@@ -73,12 +107,12 @@ public class BjDriver {
             }
         } while (LOOP);
         System.out.println("You played a total of: " + roundsPlayed + " round(s)!");
-        if (roundsPlayed > 35)
+        if (roundsPlayed > 35) {
             System.out.println(".. wow you might have a problem you should take a break..");
-        System.out.println("");
+        }
+        System.out.println("You played: " + roundsPlayed + " hands!\n");
 
         System.out.println("Thank you for using my program!");
-        // Have a print that tell the user "You played: "#" hands!
         System.out.println("Program created by Vincent Welbourne");
 
         keyboard.close();
