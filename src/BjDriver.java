@@ -1,7 +1,7 @@
 /*
  * Program created by Vincent Welbourne
  * vincent.vw04@gmail.com
- * Code description: This is a recreation of the famous card game called 'Blackjack' i have implemented my own
+ * Code description: This is a recreation of the famous card game called 'Blackjack' I have implemented my own
  * variation and twist of the rules for this program for more information you may contact me through my email or
  * for more information on the game go to help section.
  *
@@ -16,10 +16,13 @@ import java.util.Scanner;
  * @author Vincent Welbourne
  */
 public class BjDriver {
+    public static Scanner keyboard = new Scanner(System.in);
     private static boolean LOOP = true;
     public static int roundsPlayed = 0;
     public static boolean noCards = true;
     public static String playerName = "Player";
+    public final static int START_CASH = 500;
+    public static int PLAYER_ID = 1;
 
     /**
      * This is where the game starts you get options from start game, help and exit.
@@ -29,25 +32,33 @@ public class BjDriver {
      * @param args no commandline arguments
      */
     public static void main(String[] args) {
-        Scanner keyboard = new Scanner(System.in);
 
+        Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0);
+        BjWork.players.add(dealer);
+        BjWork.hands.add(new Hand());
 
         System.out.println("Welcome to BlackJack\n");
         System.out.print("Enter your name (Optional)\n" + "> ");
         playerName = keyboard.nextLine();
         if (playerName.isEmpty()) {
-            playerName = "Player";
+            playerName = "Player"+PLAYER_ID;
         }
+        //TODO: Eventually make this capable for each player that joins the game (For now just the only 1 player that joins)
+        Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0);
+        BjWork.players.add(player);
+        BjWork.hands.add(new Hand());
         do {
             try {
                 System.out.print("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
                 int option = keyboard.nextInt();
+                keyboard.nextLine();
 
                 switch (option) {
 
                     // 1. Call to BjWork class and start a new hand
                     case 1:
-                        if (roundsPlayed == 0 || noCards) { // Initialize decks if its first round or if you have no cards
+                        // Initialize decks if its first round or if you have no cards
+                        if (roundsPlayed == 0 || noCards) {
                             BjWork.deck = Shuffle.shuffle();
                             BjWork.game();
                         } else {
@@ -62,6 +73,7 @@ public class BjDriver {
                             System.out.print("Enter '1' to learn how to play, Basic strategy sheet '2' or 3 to exit help menu.\n" + "> ");
                             try {
                                 int helpOption = keyboard.nextInt();
+                                keyboard.nextLine();
                                 switch (helpOption) {
                                     case 1:
                                         System.out.println("Blackjack is a simple card game where your only opponent is the dealer.\n" +
@@ -95,6 +107,8 @@ public class BjDriver {
                         break;
                     // 3. Exit Program
                     case 3:
+                        // TODO: remove player that chose to leave
+                        // TODO: check if theres any more players, if not proceed and close the program
                         LOOP = false;
                         break;
                     default:
@@ -106,16 +120,19 @@ public class BjDriver {
                 keyboard.nextLine();
             }
         } while (LOOP);
-        System.out.println("You played a total of: " + roundsPlayed + " round(s)!");
         if (roundsPlayed > 35) {
             System.out.println(".. wow you might have a problem you should take a break..");
         }
         System.out.println("You played: " + roundsPlayed + " hands!\n");
+        /*
+         * TODO: Show each player win/loss stats
+         * System.out.println("You won: " + roundsPlayed + " hands\n");
+         * System.out.println("You lost: " + roundsPlayed + " hands\n");
+         */
 
         System.out.println("Thank you for using my program!");
         System.out.println("Program created by Vincent Welbourne");
 
         keyboard.close();
-        System.out.close();
     }
 }
