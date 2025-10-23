@@ -3,6 +3,7 @@
  * vincent.vw04@gmail.com
  *
  */
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ import java.util.Scanner;
  */
 public class Shuffle {
     public static int numOfDecks;
+
     /**
      *
      * The actual shuffle object and method
@@ -22,19 +24,17 @@ public class Shuffle {
      * @return null
      */
     public static List<Card> shuffle() {
-        Scanner keyboard = new Scanner(System.in);
-
 
         if (BjDriver.roundsPlayed == 0) {
             System.out.println("How many decks would you like to play with?");
             do {
                 try {
-                    System.out.print("You may choose a number from 1-8.\n"+"> ");
-                    numOfDecks = keyboard.nextInt();
+                    System.out.print("You may choose a number from 1-8.\n" + "> ");
+                    numOfDecks = BjDriver.keyboard.nextInt();
                     break;
                 } catch (Exception e) {
                     System.out.println("Please enter a valid number!");
-                    keyboard.nextLine();
+                    BjDriver.keyboard.nextLine();
                 }
             } while (true);
         }
