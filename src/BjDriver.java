@@ -35,7 +35,7 @@ public class BjDriver {
 
         Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0);
         BjWork.players.add(dealer);
-        BjWork.hands.add(new Hand());
+        BjWork.hands.add(new BjUtilities());
 
         System.out.println("Welcome to BlackJack\n");
         System.out.print("Enter your name (Optional)\n" + "> ");
@@ -46,7 +46,7 @@ public class BjDriver {
         //TODO: Eventually make this capable for each player that joins the game (For now just the only 1 player that joins)
         Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0);
         BjWork.players.add(player);
-        BjWork.hands.add(new Hand());
+        BjWork.hands.add(new BjUtilities());
         do {
             try {
                 System.out.print("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
