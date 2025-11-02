@@ -54,16 +54,16 @@ public class Deck {
         deck = new LinkedList<>();
 
         for (int i = 0; i < numOfDecks; i++) {
-            /**
+            /*
              * Card suit array.
              */
-            String[] SUITS = {"Clubs", "Spades", "Diamonds", "Hearts"}; // 4
+             final String[] SUITS = {"Clubs", "Spades", "Diamonds", "Hearts"}; // 4
 
             for (String suit : SUITS) {
-                /**
+                /*
                  * Card rank array.
                  */
-                String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}; // 13
+                final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}; // 13
                 for (String rank : RANKS) {
                     int value = getValue(rank);
                     switch (suit) {
