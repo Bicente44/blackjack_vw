@@ -7,7 +7,8 @@
 import java.util.*;
 
 /**
- * This class ..
+ * This class is the Blackjack work class, it is what composes the game and brings it all together.
+ * Utilizes the utility methods in BjUtilities.
  *
  * @author Vincent Wrlbourne
  */
@@ -18,15 +19,14 @@ public class BjWork {
             + "3. Double\n"
             + "4. Split\n" +
             "> ";
-    public static List<Card> deck;
+    public static List<Card> deck = null;
     public static List<Player> players = new ArrayList<>();
-    public static List<Hand> hands = new ArrayList<>();
+    public static List<BjUtilities> hands = new ArrayList<>();
 
     /**
      *
-     * @return
      */
-    public static List<Card> game() {
+    public static void game() {
         if (deck == null) {
             System.out.println("Deck not initialized or empty, creating and shuffling now.");
             deck = Shuffle.shuffle();
@@ -46,42 +46,29 @@ public class BjWork {
         } else {
             System.out.println("Debug ahh, player list is broken, ");
         }
-        for (Hand h : hands) h.clear();
+        for (BjUtilities h : hands) h.clear();
         for (Player p : players) p.setCardTotal(0);
 
-        return deck;
-    }
-
-    public boolean readValue() {
-
-        return true;
     }
 
     public static void gameStart() {
-        for (Hand h : hands) h.clear();
+        for (BjUtilities h : hands) h.clear();
 
         int numPlayers = players.size(); // including dealer at index 0
 
         // First pass: deal one card to each player
-        for (int i = 1; i < numPlayers; i++) {
-            Card c = drawCard();
-            hands.get(i).addCard(c);
-            System.out.println(players.get(i).getPlayerName() + ": " + c);
-        }
+        BjUtilities.playerPass();
 
         // Dealer upcard (index 0)
-        Card dealerUp = drawCard();
+        Card dealerUp = BjUtilities.drawCard();
         hands.get(0).addCard(dealerUp);
         System.out.println("Dealer: " + dealerUp);
 
         // Second pass: deal second card to each player
-        for (int i = 1; i < numPlayers; i++) {
-            Card c = drawCard();
-            hands.get(i).addCard(c);
-            System.out.println(players.get(i).getPlayerName() + ": " + c);
-        }
+        BjUtilities.playerPass();
+
         // Dealer hidden card (index 0)
-        Card dealerHidden = drawCard();
+        Card dealerHidden = BjUtilities.drawCard();
         hands.get(0).addCard(dealerHidden);
         System.out.println("Dealer: ?? (hidden)");
 
@@ -100,8 +87,7 @@ public class BjWork {
      */
     public static void playerTurn(int playerIndex) {
         Player p = players.get(playerIndex);
-        Hand hand = hands.get(playerIndex);
-        Hand dealerHand = hands.get(0);
+        BjUtilities hand = hands.get(playerIndex);
         boolean exitHand = false;
 
         while (!exitHand) {
@@ -113,7 +99,7 @@ public class BjWork {
                 switch (action) {
 //		Hit
                     case 1:
-                        Card draw = drawCard();
+                        Card draw = BjUtilities.drawCard();
                         hand.addCard(draw);
                         p.setCardTotal(hand.getTotal());
                         System.out.println(p.getPlayerName() + " drew: " + draw + " (total: " + hand.getTotal() + ")");
@@ -151,7 +137,7 @@ public class BjWork {
 
     private static void dealerPlay() {
         Player dealer = players.get(0);
-        Hand dealerHand = hands.get(0);
+        BjUtilities dealerHand = hands.get(0);
 
         // Reveal hidden card
         if (dealerHand.getCards().size() > 1) {
@@ -162,7 +148,7 @@ public class BjWork {
         System.out.println("Dealer total: " + dealerHand.getTotal());
 
         while (dealerHand.getTotal() < 17) {
-            Card draw = drawCard();
+            Card draw = BjUtilities.drawCard();
             dealerHand.addCard(draw);
             System.out.println("Dealer draws: " + draw + " (total: " + dealerHand.getTotal() + ")");
         }
@@ -173,26 +159,18 @@ public class BjWork {
         endGameResults();
     }
 
-    public static Card drawCard() {
-        if (deck == null || deck.isEmpty()) {
-            System.out.println("Deck empty, reshuffling.");
-            deck = new LinkedList<>(Shuffle.shuffle());
-        }
-        return deck.remove(0);
-    }
-
     /**
      * Compares dealer hand to each player hand and assigns wins/losses/pushes.
      * This method assumes dealer is players.get(0) and hands[0] is dealer hand.
      */
     private static void endGameResults() {
         Player dealer = players.get(0);
-        Hand dealerHand = hands.get(0);
+        BjUtilities dealerHand = hands.get(0);
         int dealerTotal = dealerHand.getTotal();
 
         for (int i = 1; i < players.size() && i < hands.size(); i++) {
             Player p = players.get(i);
-            Hand h = hands.get(i);
+            BjUtilities h = hands.get(i);
             int playerTotal = h.getTotal();
 
             System.out.print(p.getPlayerName() + " (" + playerTotal + ") vs Dealer (" + dealerTotal + "): ");
