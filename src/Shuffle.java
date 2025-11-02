@@ -6,7 +6,6 @@
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class takes care of mixing the cards, and of how many decks are in use
