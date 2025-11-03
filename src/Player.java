@@ -14,7 +14,7 @@ public abstract class Player {
     private int wins;
     private int losses;
     private int cardTotal;
-
+//TODO boolean hasBlackjack;
     /**
      * Player constructor
      */
@@ -25,6 +25,7 @@ public abstract class Player {
         this.wins = wins;
         this.losses = losses;
         this.cardTotal = cardTotal;
+        //TODO this.hasBlackjack = hasBlackjack;
     }
 
     /**
