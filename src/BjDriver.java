@@ -37,7 +37,7 @@ public class BjDriver {
         BjWork.players.add(dealer);
         BjWork.hands.add(new BjUtilities());
 
-        System.out.println("Welcome to BlackJack\n");
+        System.out.println("\nWelcome to BlackJack");
         System.out.print("Enter your name (Optional)\n" + "> ");
         playerName = keyboard.nextLine();
         if (playerName.isEmpty()) {
@@ -49,7 +49,7 @@ public class BjDriver {
         BjWork.hands.add(new BjUtilities());
         do {
             try {
-                System.out.print("Would you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
+                System.out.print("\nWould you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
                 int option = keyboard.nextInt();
                 keyboard.nextLine();
 
