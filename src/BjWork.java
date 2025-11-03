@@ -22,6 +22,9 @@ public class BjWork {
     public static List<Card> deck = null;
     public static List<Player> players = new ArrayList<>();
     public static List<BjUtilities> hands = new ArrayList<>();
+    public static Card dealerUp;
+    public static List<Boolean> bjStand = new ArrayList<>();
+    public static boolean roundOver = false;
 
     /**
      *
@@ -40,34 +43,42 @@ public class BjWork {
         // Deal initial cards
         gameStart();
 
-        if (!players.isEmpty()) {
-            int humanIndex = 1;
-            playerTurn(humanIndex);
-        } else {
-            System.out.println("Debug ahh, player list is broken, ");
+        // Check for round end with dealer or player blackjack(s)
+        if (!BjWork.roundOver) {
+            for (int i = 1; i < players.size(); i++) {
+                if (BjWork.roundOver) break;
+                playerTurn(i);
+            }
+            if (!BjWork.roundOver) {
+                dealerPlay();
+            }
         }
         for (BjUtilities h : hands) h.clear();
         for (Player p : players) p.setCardTotal(0);
-
     }
 
     public static void gameStart() {
+        // Clear for game start
         for (BjUtilities h : hands) h.clear();
+        roundOver = false;
+        bjStand.clear();
+        for (int i = 0; i < players.size(); i++) bjStand.add(false);
 
         int numPlayers = players.size(); // including dealer at index 0
 
         // First pass: deal one card to each player
         BjUtilities.playerPass();
 
-        // Dealer upcard (index 0)
-        Card dealerUp = BjUtilities.drawCard();
+        // TODO? Could make a method for dealer pass in the future...
+        // Dealer upcard
+        dealerUp = BjUtilities.drawCard();
         hands.get(0).addCard(dealerUp);
         System.out.println("Dealer: " + dealerUp);
 
         // Second pass: deal second card to each player
         BjUtilities.playerPass();
 
-        // Dealer hidden card (index 0)
+        // Dealer hidden card
         Card dealerHidden = BjUtilities.drawCard();
         hands.get(0).addCard(dealerHidden);
         System.out.println("Dealer: ?? (hidden)");
@@ -76,8 +87,8 @@ public class BjWork {
         for (int i = 0; i < numPlayers; i++) {
             players.get(i).setCardTotal(hands.get(i).getTotal());
         }
-
-        // TODO Show dealer total
+        // Check for blackjack to prevent further bets
+        BjUtilities.checkBlackjack();
     }
 
     /**
@@ -86,16 +97,26 @@ public class BjWork {
      *
      */
     public static void playerTurn(int playerIndex) {
+        int action = 0;
         Player p = players.get(playerIndex);
         BjUtilities hand = hands.get(playerIndex);
-        boolean exitHand = false;
+        boolean exitHand = BjWork.roundOver;
 
-        while (!exitHand) {
+        if (BjWork.roundOver) {
+            return;
+        }
+
+        boolean playerStand = (BjWork.bjStand.size() > playerIndex && BjWork.bjStand.get(playerIndex));
+        if (playerStand) {
+            return;
+        }
+
+        while (!exitHand && !BjWork.roundOver) {
+            System.out.print("\nDealer upcard: " + dealerUp.getValue());
             System.out.println("\n" + p.getPlayerName() + " total: " + hand.getTotal());
-            // TODO Here when player gets 21 skip this and wait for other players/just skip to win screen
             System.out.print(MENU_ACTIONS);
             try {
-                int action = BjDriver.keyboard.nextInt();
+                action = BjDriver.keyboard.nextInt();
                 switch (action) {
 //		Hit
                     case 1:
@@ -110,9 +131,7 @@ public class BjWork {
                         break;
 //		Stand
                     case 2:
-                        System.out.println(p.getPlayerName() + " stands with " + hand.getTotal());
-                        // For now run dealer
-                        dealerPlay();
+                        System.out.println(p.getPlayerName() + " stands with " + hand.getTotal() + "\n");
                         exitHand = true;
                         break;
 //		Double
@@ -135,7 +154,7 @@ public class BjWork {
         }
     }
 
-    private static void dealerPlay() {
+    public static void dealerPlay() {
         Player dealer = players.get(0);
         BjUtilities dealerHand = hands.get(0);
 
@@ -177,16 +196,16 @@ public class BjWork {
 
             if (playerTotal > 21) {
                 // player already busted — dealer wins
-                System.out.println("Player busted. Dealer wins.");
+                System.out.println(p.getPlayerName() + " busted. Dealer wins.");
                 dealer.addWin();
                 p.addLoss();
             } else if (dealerTotal > 21) {
                 // dealer busted, player wins
-                System.out.println("Dealer busted. Player wins.");
+                System.out.println("Dealer busted. " + p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
             } else if (playerTotal > dealerTotal) {
-                System.out.println("Player wins.");
+                System.out.println(p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
             } else if (playerTotal < dealerTotal) {
