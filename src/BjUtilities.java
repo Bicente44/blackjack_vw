@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Hand class is used as the utilities for BjWork in relation to each hand.
- * TODO Will probably modify and add the rest of the utilities to free up BjWork
  */
 public class BjUtilities {
     private List<Card> cards = new ArrayList<>();
@@ -43,6 +42,10 @@ public class BjUtilities {
         }
     }
 
+    /**
+     * Method to draw a card from the static deck list in BjWork
+     * @return Card drawn
+     */
     public static synchronized Card drawCard() {
         if (BjWork.deck == null || BjWork.deck.isEmpty()) {
             System.out.println("Deck empty, reshuffling.");
@@ -63,6 +66,43 @@ public class BjUtilities {
             Card c = BjUtilities.drawCard();
             BjWork.hands.get(i).addCard(c);
             System.out.println(BjWork.players.get(i).getPlayerName() + ": " + c);
+        }
+    }
+
+    /**
+     * Check for blackjack
+     */
+    public static void checkBlackjack() {
+        int numPlayers = BjWork.players.size();
+
+        if (BjWork.hands.size() != BjWork.players.size()) {
+            throw new IllegalStateException("hands and players lists must be same length");
+        }
+        if (BjWork.bjStand.size() != numPlayers) {
+            BjWork.bjStand.clear();
+            for (int i = 0; i < numPlayers; i++) BjWork.bjStand.add(false);
+        }
+        BjUtilities dealerHand = BjWork.hands.get(0);
+        boolean dealerBJ = (dealerHand.getCards().size() == 2 && dealerHand.getTotal() == 21);
+
+        if (dealerBJ) {
+            System.out.println("\nDealer has blackjack, all players stand.");
+            // force every player to stand
+            for (int i = 1; i < numPlayers; i++) {
+                BjWork.bjStand.set(i, true);
+            }
+            // Mark the round as finished and resolve
+            BjWork.roundOver = true;
+            BjWork.dealerPlay();
+            return;
+        }
+        for (int i = 1; i < numPlayers; i++) {
+            BjUtilities ph = BjWork.hands.get(i);
+            boolean playerBJ = (ph.getCards().size() == 2 && ph.getTotal() == 21);
+            BjWork.bjStand.set(i, playerBJ);
+            if (playerBJ) {
+                System.out.println(BjWork.players.get(i).getPlayerName() + " has Blackjack and will stand.");
+            }
         }
     }
 
