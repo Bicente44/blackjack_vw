@@ -14,18 +14,18 @@ public abstract class Player {
     private int wins;
     private int losses;
     private int cardTotal;
-//TODO boolean hasBlackjack;
+    private double bet;
     /**
      * Player constructor
      */
-    protected Player(int PLAYER_ID, String playerName, int cardTotal, double money, int wins, int losses) {
+    protected Player(int PLAYER_ID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
         this.PLAYER_ID = PLAYER_ID;
         this.playerName = playerName;
         this.money = money;
         this.wins = wins;
         this.losses = losses;
         this.cardTotal = cardTotal;
-        //TODO this.hasBlackjack = hasBlackjack;
+        this.bet = bet;
     }
 
     /**
@@ -57,6 +57,18 @@ public abstract class Player {
      */
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    public double getBet() {
+        return bet;
+    }
+
+    public void setBet(double bet) {
+        this.bet = bet;
+    }
+
+    public void adjustMoney(double x) {
+        this.money += x;
     }
 
     /**
@@ -109,16 +121,16 @@ public abstract class Player {
      * May change to seperate file later if complications arise.
      */
     public static class HumanPlayer extends Player {
-        public HumanPlayer(int playerID, String playerName, int cardTotal, double money, int wins, int losses) {
-            super(playerID, playerName, cardTotal, money, wins, losses);
+        public HumanPlayer(int playerID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
+            super(playerID, playerName, cardTotal, money, wins, losses, bet);
         }
     }
     /**
      * Nested Dealer class, this is the dealer object will use its card total and player name (dealer)
      */
     public static class Dealer extends Player {
-        public Dealer(int playerID, String playerName, int cardTotal, double money, int wins, int losses) {
-            super(0, "Dealer", cardTotal, money, wins, losses);
+        public Dealer(int playerID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
+            super(0, "Dealer", cardTotal, money, wins, losses, bet);
         }
     }
 }
