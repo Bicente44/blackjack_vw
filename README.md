@@ -7,12 +7,14 @@
 ## Planned tasks
 
  - Next important steps program wide
-    - [x] Dealer check for blackjack after getting 10 or Ace
-    - [x] Show dealer value more clearly without showing hidden card.
     - [ ] Show player stats at end of program
+    - [x] Bets entry system (Ideally with timer to be able to change bets)
+    - [ ] Improve bet entry system with timer
+    - [ ] Fix game start initialize deck (Player 1 and rounds == 0 should access game start)
+    - [ ] Set minimum table bets with card initialization phase
  
  - BjWork System
-    - [ ] Make the ability to Double
+    - [x] Make the ability to Double
     - [ ] Make the ability to Split
     - [ ] Auto stand when hit up to 21 ??
 
@@ -20,7 +22,7 @@
     - [ ] Complete basic strategy sheet
 
  - Player
-    - [ ] Complete money System
+    - [x] Complete money System
 
  - Multiplayer Features
     - [ ] Make player timeout feature
