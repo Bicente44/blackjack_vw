@@ -33,7 +33,7 @@ public class BjDriver {
      */
     public static void main(String[] args) {
 
-        Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0);
+        Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0, 0.0);
         BjWork.players.add(dealer);
         BjWork.hands.add(new BjUtilities());
 
@@ -44,7 +44,7 @@ public class BjDriver {
             playerName = "Player"+PLAYER_ID;
         }
         //TODO: Eventually make this capable for each player that joins the game (For now just the only 1 player that joins)
-        Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0);
+        Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0, 0.0);
         BjWork.players.add(player);
         BjWork.hands.add(new BjUtilities());
         do {
@@ -60,6 +60,7 @@ public class BjDriver {
                         // Initialize decks if its first round or if you have no cards
                         if (roundsPlayed == 0 || noCards) {
                             BjWork.deck = Shuffle.shuffle();
+                            // TODO SET MINIMUM BET
                             BjWork.game();
                         } else {
                             BjWork.game();
