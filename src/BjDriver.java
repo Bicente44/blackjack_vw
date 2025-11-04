@@ -121,15 +121,32 @@ public class BjDriver {
                 keyboard.nextLine();
             }
         } while (LOOP);
-        if (roundsPlayed > 35) {
-            System.out.println(".. wow you might have a problem you should take a break..");
+
+        // TODO how the heck do i eventually make it for the player that left not everyone
+        System.out.println("Player stats:");
+        System.out.printf("%-15s %10s %8s %8s %10s %12s %8s%n",
+                "Name", "Money", "Wins", "Losses", "Total", "WinRate", "Net");
+        System.out.println("-------------------------------------------------------------------------------");
+        for (int i = 1; i < BjWork.players.size(); i++) {
+            Player p = BjWork.players.get(i);
+            String name = p.getPlayerName();
+            double money = p.getMoney();
+            int wins = p.getWins();
+            int losses = p.getLosses();
+            int total = wins + losses;
+            String winRate;
+            if (total == 0) {
+                winRate = "N/A";
+            } else {
+                double rate = (wins * 100.0) / total;
+                winRate = String.format("%.1f%%", rate);
+            }
+            double net = money - START_CASH;
+
+            System.out.printf("%-18s %5.2f$ %5d %8d %11d %12s %10.2f$%n",
+                    name, money, wins, losses, total, winRate, net);
         }
-        System.out.println("You played: " + roundsPlayed + " hands!\n");
-        /*
-         * TODO: Show each player win/loss stats
-         * System.out.println("You won: " + roundsPlayed + " hands\n");
-         * System.out.println("You lost: " + roundsPlayed + " hands\n");
-         */
+        System.out.println("-------------------------------------------------------------------------------\n");
 
         System.out.println("Thank you for using my program!");
         System.out.println("Program created by Vincent Welbourne");
