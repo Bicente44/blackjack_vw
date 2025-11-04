@@ -40,6 +40,15 @@ public class BjWork {
         if (players.isEmpty() || hands.size() != players.size()) {
             System.out.println("Debug ahh, player list is broken");
         }
+
+        // ALL PLAYERS PLACE BETS HERE
+        if (players.size() > 1) {
+            for (int i = 1; i < players.size(); i++) {
+                Player p = players.get(i);
+                BjUtilities.placeBet(p);
+            }
+        }
+
         // Deal initial cards
         gameStart();
 
@@ -100,7 +109,7 @@ public class BjWork {
         int action = 0;
         Player p = players.get(playerIndex);
         BjUtilities hand = hands.get(playerIndex);
-        boolean exitHand = BjWork.roundOver;
+        boolean exitHand = false;
 
         if (BjWork.roundOver) {
             return;
@@ -120,12 +129,8 @@ public class BjWork {
                 switch (action) {
 //		Hit
                     case 1:
-                        Card draw = BjUtilities.drawCard();
-                        hand.addCard(draw);
-                        p.setCardTotal(hand.getTotal());
-                        System.out.println(p.getPlayerName() + " drew: " + draw + " (total: " + hand.getTotal() + ")");
-                        if (hand.getTotal() > 21) {
-                            System.out.println(p.getPlayerName() + " busted!");
+                        // Check if bust, else continue
+                        if (hand.hitAction(p)) {
                             exitHand = true;
                         }
                         break;
@@ -135,10 +140,17 @@ public class BjWork {
                         exitHand = true;
                         break;
 //		Double
-                    /*case 3:
+                    case 3:
+                        Boolean dblResult = hand.doubleAction(p);
+                        if (dblResult == null) {
+                            break;
+                        } else {
+                            // Double performed force exit
+                            exitHand = true;
+                        }
                         break;
 //		Split
-                    case 4:
+                    /*case 4:
                         break;
 
                      */
@@ -186,17 +198,37 @@ public class BjWork {
         Player dealer = players.get(0);
         BjUtilities dealerHand = hands.get(0);
         int dealerTotal = dealerHand.getTotal();
+        boolean dealerBlackjack = (dealerHand.getCards().size() == 2 && dealerTotal == 21);
 
         for (int i = 1; i < players.size() && i < hands.size(); i++) {
             Player p = players.get(i);
             BjUtilities h = hands.get(i);
             int playerTotal = h.getTotal();
+            double bet = p.getBet(); // amount already deducted at bet time (placeBet)
 
             System.out.print(p.getPlayerName() + " (" + playerTotal + ") vs Dealer (" + dealerTotal + "): ");
 
+            boolean playerBlackjack = (h.getCards().size() == 2 && playerTotal == 21);
+
             if (playerTotal > 21) {
-                // player already busted — dealer wins
+                // player busted dealer wins
                 System.out.println(p.getPlayerName() + " busted. Dealer wins.");
+                dealer.addWin();
+                p.addLoss();
+            } else if (playerBlackjack && dealerBlackjack) {
+                // Both have natural blackjack, push
+                System.out.println(p.getPlayerName() + " and Dealer have Blackjack, bets returned.");
+                p.adjustMoney(bet);
+            } else if (playerBlackjack) {
+                // Player natural blackjack
+                System.out.println(p.getPlayerName() + " has Blackjack! Pays 3:2.");
+                p.addWin();
+                dealer.addLoss();
+                double payout = Math.round(bet * 2.5); // round to nearest whole dollar
+                p.adjustMoney(payout);
+            } else if (dealerBlackjack) {
+                // Dealer natural blackjack
+                System.out.println("Dealer has Blackjack. " + p.getPlayerName() + " loses.");
                 dealer.addWin();
                 p.addLoss();
             } else if (dealerTotal > 21) {
@@ -204,20 +236,23 @@ public class BjWork {
                 System.out.println("Dealer busted. " + p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
+                p.adjustMoney(bet * 2); // return bet + winnings
             } else if (playerTotal > dealerTotal) {
                 System.out.println(p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
+                p.adjustMoney(bet * 2);
             } else if (playerTotal < dealerTotal) {
                 System.out.println("Dealer wins.");
                 dealer.addWin();
                 p.addLoss();
             } else {
                 System.out.println("Push. Bets are returned.");
-                // no changes to wins/losses for push
+                p.adjustMoney(bet);
             }
+            // reset player's bet for next round
+            p.setBet(0);
         }
-
         // Clear totals for next round
         for (Player p : players) p.setCardTotal(0);
     }
