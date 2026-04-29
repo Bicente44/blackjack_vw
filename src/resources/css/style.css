@@ -1,0 +1,158 @@
+/*
+   Palette:
+     #0b1624  navy-deep  — full-screen background
+     #111e30  navy-card  — card surface
+     #D4AF37  gold       — primary accent
+     #e8c84a  gold-light — hover
+     #b89620  gold-dark  — pressed
+     #5a7a96  muted      — secondary text / divider
+     #2e4a62  dim        — hints / footer
+*/
+
+/* ── Root ──────────────────────────────────────────────────────────────── */
+
+.root-pane {
+    -fx-background-color: #0b1624;
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────── */
+
+.lobby-card {
+    -fx-background-color: #111e30;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.70), 40, 0.2, 0, 12);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+
+.header-box {
+    -fx-padding: 0 0 4 0;
+}
+
+.header-suits {
+    -fx-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 18px;
+    -fx-opacity: 0.75;
+}
+
+.header-title {
+    -fx-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 54px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.25), 20, 0.3, 0, 0);
+}
+
+.header-subtitle {
+    -fx-fill: #5a7a96;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+/* ── Divider ───────────────────────────────────────────────────────────── */
+
+.divider-box {
+    -fx-padding: 0;
+}
+
+.divider-line {
+    -fx-stroke: #D4AF37;
+    -fx-stroke-width: 0.8;
+    -fx-opacity: 0.45;
+}
+
+.divider-diamond {
+    -fx-fill: #D4AF37;
+    -fx-font-size: 10px;
+    -fx-opacity: 0.8;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+
+.button-row {
+    -fx-padding: 8 0 8 0;
+}
+
+.lobby-btn {
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 13 34;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-pref-width: 152;
+}
+
+.host-btn {
+    -fx-background-color: #D4AF37;
+    -fx-text-fill: #0b1624;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+}
+
+.host-btn:hover {
+    -fx-background-color: #e8c84a;
+    -fx-border-color: #e8c84a;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.35), 12, 0.1, 0, 0);
+}
+
+.host-btn:pressed {
+    -fx-background-color: #b89620;
+    -fx-border-color: #b89620;
+    -fx-effect: none;
+}
+
+.join-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D4AF37;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+}
+
+.join-btn:hover {
+    -fx-background-color: rgba(212,175,55,0.08);
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.25), 10, 0.1, 0, 0);
+}
+
+.join-btn:pressed {
+    -fx-background-color: rgba(212,175,55,0.18);
+    -fx-effect: none;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+
+.footer-box {
+    -fx-padding: 2 0 0 0;
+}
+
+.footer-name {
+    -fx-fill: #3a6080;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+.footer-bullet {
+    -fx-fill: #2a4560;
+    -fx-font-size: 12px;
+}
+
+.footer-link {
+    -fx-text-fill: #2e4a62;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
+    -fx-padding: 0;
+    -fx-underline: false;
+}
+
+.footer-link:hover {
+    -fx-text-fill: #D4AF37;
+}
