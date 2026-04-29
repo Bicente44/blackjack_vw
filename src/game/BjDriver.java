@@ -36,8 +36,9 @@ public class BjDriver {
     public static void launch(String[] args) {
 
         Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0, 0.0);
-        GameSession.players.add(dealer);
-        GameSession.hands.add(new HandManager());
+        GameSession gameSession = new GameSession();
+        gameSession.players.add(dealer);
+        gameSession.hands.add(new HandManager());
 
         System.out.println("\nWelcome to BlackJack");
         System.out.print("Enter your name (Optional)\n" + "> ");
@@ -47,8 +48,8 @@ public class BjDriver {
         }
         //TODO: Eventually make this capable for each player that joins the game (For now just the only 1 player that joins)
         Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0, 0.0);
-        GameSession.players.add(player);
-        GameSession.hands.add(new HandManager());
+        gameSession.players.add(player);
+        gameSession.hands.add(new HandManager());
         do {
             try {
                 System.out.print("\nWould you like to start new a hand?\n" + "Options are: 1. (Yes), 2. (Help), 3. (No, exit).\n" + "> ");
@@ -61,11 +62,11 @@ public class BjDriver {
                     case 1:
                         // Initialize decks if its first round or if you have no cards
                         if (roundsPlayed == 0 || noCards) {
-                            GameSession.deck = Shuffle.shuffle();
+                            gameSession.deck = Shuffle.shuffle();
                             // TODO SET MINIMUM BET
-                            GameSession.game();
+                            gameSession.game();
                         } else {
-                            GameSession.game();
+                            gameSession.game();
                         }
                         roundsPlayed++;
                         break;
@@ -129,8 +130,8 @@ public class BjDriver {
         System.out.printf("%-15s %10s %8s %8s %10s %12s %8s%n",
                 "Name", "Money", "Wins", "Losses", "Total", "WinRate", "Net");
         System.out.println("-------------------------------------------------------------------------------");
-        for (int i = 1; i < GameSession.players.size(); i++) {
-            Player p = GameSession.players.get(i);
+        for (int i = 1; i < gameSession.players.size(); i++) {
+            Player p = gameSession.players.get(i);
             String name = p.getPlayerName();
             double money = p.getMoney();
             int wins = p.getWins();
