@@ -55,9 +55,9 @@ public class HandManager {
     public boolean hitAction(Player p, Card draw) {
         this.addCard(draw);
         p.setCardTotal(this.getTotal());
-        Debug.print(p.getPlayerName() + " drew: " + draw + " (total: " + this.getTotal() + ")");
+        Debug.println(p.getPlayerName() + " drew: " + draw + " (total: " + this.getTotal() + ")");
         if (this.getTotal() > 21) {
-            Debug.print(p.getPlayerName() + " busted!");
+            Debug.println(p.getPlayerName() + " busted!");
             return true;
         }
         return false;
@@ -73,7 +73,7 @@ public class HandManager {
         double currentBet = p.getBet();
         p.adjustMoney(-currentBet);
         p.setBet(currentBet * 2);
-        Debug.print(p.getPlayerName() + " doubles to $" + p.getBet() + ". Remaining: $" + (int)p.getMoney());
+        Debug.println(p.getPlayerName() + " doubles to $" + p.getBet() + ". Remaining: $" + (int)p.getMoney());
         return this.hitAction(p, doubleCard);
     }
 

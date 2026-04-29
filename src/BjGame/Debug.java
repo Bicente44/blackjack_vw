@@ -58,9 +58,20 @@ public class Debug {
      *
      * @param message A string message to output in a print
      */
+    static public void println(String message) {
+        messages.add(message);
+        if (enabled) System.out.println(message);
+        runMessageCallback(message);
+    }
+
+    /**
+     * BjGame.Debug print rather than sys out, gets rid of clutter in code and clean way to find issues
+     *
+     * @param message A string message to output in a print
+     */
     static public void print(String message) {
         messages.add(message);
-        System.out.println(message);
+        if (enabled) System.out.print(message);
         runMessageCallback(message);
     }
 

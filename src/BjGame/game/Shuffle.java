@@ -29,14 +29,14 @@ public class Shuffle {
     public static List<Card> shuffle() {
 
         if (BjDriver.roundsPlayed == 0) {
-            Debug.print("How many decks would you like to play with?");
+            Debug.println("How many decks would you like to play with?");
             do {
                 try {
-                    System.out.print("You may choose a number from 1-8.\n" + "> ");
+                    Debug.print("You may choose a number from 1-8.\n" + "> ");
                     numOfDecks = BjDriver.keyboard.nextInt();
                     break;
                 } catch (Exception e) {
-                    Debug.print("Please enter a valid number!");
+                    Debug.println("Please enter a valid number!");
                     BjDriver.keyboard.nextLine();
                 }
             } while (true);
@@ -47,7 +47,7 @@ public class Shuffle {
 
         // shuffle the deck
         Collections.shuffle(deckList);
-        Debug.print("BjGame.shared.Deck shuffled...");
+        Debug.println("BjGame.shared.Deck shuffled...");
 
 
         return deckList;
