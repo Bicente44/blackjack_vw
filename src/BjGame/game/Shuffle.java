@@ -1,18 +1,19 @@
-package game;/*
+package BjGame.game;/*
  * Program created by Vincent Welbourne
  * vincent.vw04@gmail.com
  *
  */
 
-import shared.Card;
-import shared.Deck;
+import BjGame.Debug;
+import BjGame.shared.Card;
+import BjGame.shared.Deck;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
  * This class takes care of mixing the cards, and of how many decks are in use
- * for the game.
+ * for the BjGame.game.
  *
  * @author Vincent Welbourne
  */
@@ -28,14 +29,14 @@ public class Shuffle {
     public static List<Card> shuffle() {
 
         if (BjDriver.roundsPlayed == 0) {
-            System.out.println("How many decks would you like to play with?");
+            Debug.print("How many decks would you like to play with?");
             do {
                 try {
                     System.out.print("You may choose a number from 1-8.\n" + "> ");
                     numOfDecks = BjDriver.keyboard.nextInt();
                     break;
                 } catch (Exception e) {
-                    System.out.println("Please enter a valid number!");
+                    Debug.print("Please enter a valid number!");
                     BjDriver.keyboard.nextLine();
                 }
             } while (true);
@@ -46,7 +47,7 @@ public class Shuffle {
 
         // shuffle the deck
         Collections.shuffle(deckList);
-        System.out.println("shared.Deck shuffled...");
+        Debug.print("BjGame.shared.Deck shuffled...");
 
 
         return deckList;

@@ -1,4 +1,4 @@
-package shared;/*
+package BjGame.shared;/*
  * Program created by Vincent Welbourne
  * vincent.vw04@gmail.com
  *
@@ -55,13 +55,13 @@ public class Deck {
 
         for (int i = 0; i < numOfDecks; i++) {
             /*
-             * shared.Card suit array.
+             * BjGame.shared.Card suit array.
              */
              final String[] SUITS = {"Clubs", "Spades", "Diamonds", "Hearts"}; // 4
 
             for (String suit : SUITS) {
                 /*
-                 * shared.Card rank array.
+                 * BjGame.shared.Card rank array.
                  */
                 final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"}; // 13
                 for (String rank : RANKS) {
@@ -109,7 +109,7 @@ public class Deck {
     }
 
     /**
-     * Returns the full deck as a LinkedList of shared.Card objects.
+     * Returns the full deck as a LinkedList of BjGame.shared.Card objects.
      * @return deck
      */
     public LinkedList<Card> getDeck() {

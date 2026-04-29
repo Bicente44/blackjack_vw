@@ -1,11 +1,11 @@
-package shared;/*
+package BjGame.shared;/*
  * Program created by Vincent Welbourne
  * vincent.vw04@gmail.com
  *
  */
 
 /**
- * shared.Player object
+ * BjGame.shared.Player object
  */
 public abstract class Player {
     private final int PLAYER_ID;
@@ -16,7 +16,7 @@ public abstract class Player {
     private int cardTotal;
     private double bet;
     /**
-     * shared.Player constructor
+     * BjGame.shared.Player constructor
      */
     protected Player(int PLAYER_ID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
         this.PLAYER_ID = PLAYER_ID;

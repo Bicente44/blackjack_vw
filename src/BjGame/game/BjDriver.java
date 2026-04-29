@@ -1,19 +1,20 @@
-package game;/*
+package BjGame.game;/*
  * Program created by Vincent Welbourne
  * vincent.vw04@gmail.com
- * Code description: This is a recreation of the famous card game called 'Blackjack' I have implemented my own
+ * Code description: This is a recreation of the famous card BjGame.game called 'Blackjack' I have implemented my own
  * variation and twist of the rules for this program for more information you may contact me through my email or
- * for more information on the game go to help section.
+ * for more information on the BjGame.game go to help section.
  *
  */
 
-import shared.Player;
+import BjGame.Debug;
+import BjGame.shared.Player;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * This class works as the launch menu of the Blackjack card game
+ * This class works as the launch menu of the Blackjack card BjGame.game
  *
  * @author Vincent Welbourne
  */
@@ -22,13 +23,13 @@ public class BjDriver {
     private static boolean LOOP = true;
     public static int roundsPlayed = 0;
     public static boolean noCards = true;
-    public static String playerName = "shared.Player";
+    public static String playerName = "BjGame.shared.Player";
     public final static int START_CASH = 500;
     public static int PLAYER_ID = 1;
 
     /**
-     * This is where the game starts you get options from start game, help and exit.
-     * Checks if it's the first game or if out of cards to initialize a deck and or
+     * This is where the BjGame.game starts you get options from start BjGame.game, help and exit.
+     * Checks if it's the first BjGame.game or if out of cards to initialize a deck and or
      * shuffle.
      *
      * @param args no commandline arguments
@@ -40,13 +41,13 @@ public class BjDriver {
         gameSession.players.add(dealer);
         gameSession.hands.add(new HandManager());
 
-        System.out.println("\nWelcome to BlackJack");
+        Debug.print("\nWelcome to BlackJack");
         System.out.print("Enter your name (Optional)\n" + "> ");
         playerName = keyboard.nextLine();
         if (playerName.isEmpty()) {
-            playerName = "shared.Player"+PLAYER_ID;
+            playerName = "BjGame.shared.Player"+PLAYER_ID;
         }
-        //TODO: Eventually make this capable for each player that joins the game (For now just the only 1 player that joins)
+        //TODO: Eventually make this capable for each player that joins the BjGame.game (For now just the only 1 player that joins)
         Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0, 0.0);
         gameSession.players.add(player);
         gameSession.hands.add(new HandManager());
@@ -80,10 +81,10 @@ public class BjDriver {
                                 keyboard.nextLine();
                                 switch (helpOption) {
                                     case 1:
-                                        System.out.println("Blackjack is a simple card game where your only opponent is the dealer.\n" +
+                                        Debug.print("Blackjack is a simple card BjGame.game where your only opponent is the dealer.\n" +
                                                 "Your goal is to beat the dealer, you can do this by simply having more cards then the dealer, or if the dealer 'busts'\n" +
                                                 "'bust' in Blackjack means you have greater then 21 cards, you may also lose this way.\n" +
-                                                "The point of the game is to have a total card value closest to 21 without busting or greater then the dealer\n" +
+                                                "The point of the BjGame.game is to have a total card value closest to 21 without busting or greater then the dealer\n" +
                                                 "You may lose if you 'bust' and the dealer has more cards then you.\n" +
                                                 "If you have a tie in card value its a 'Stand', it means you get to play again and keep your bets\n" +
                                                 "The dealer MUST stand at 17 and up, you may draw as many cards as you desire.\n" +
@@ -92,19 +93,19 @@ public class BjDriver {
                                                 "Double = you double your placed bet and you have to draw 1 last card\n");
                                         break;
                                     case 2:
-                                        System.out.println("i might actually write it down one day..\n" +
+                                        Debug.print("i might actually write it down one day..\n" +
                                                 "for now you just get the link:\n" +
                                                 "https://www.blackjackapprenticeship.com/blackjack-strategy-charts/\n");
                                         break;
                                     case 3:
-                                        System.out.println("Exiting help menu..\n");
+                                        Debug.print("Exiting help menu..\n");
                                         inHelp = false;
                                         break;
                                     default:
-                                        System.out.println("Invalid number, options are from 1-3!");
+                                        Debug.print("Invalid number, options are from 1-3!");
                                 }
                             } catch (InputMismatchException ime) {
-                                System.out.println("Please enter a valid number");
+                                Debug.print("Please enter a valid number");
                                 keyboard.nextLine();
                             }
                         }
@@ -116,20 +117,20 @@ public class BjDriver {
                         LOOP = false;
                         break;
                     default:
-                        System.out.println("Invalid number, options are from 1-3!");
+                        Debug.print("Invalid number, options are from 1-3!");
                 }
 
             } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid number!");
+                Debug.print("Please enter a valid number!");
                 keyboard.nextLine();
             }
         } while (LOOP);
 
         // TODO how the heck do i eventually make it for the player that left not everyone
-        System.out.println("shared.Player stats:");
+        Debug.print("BjGame.shared.Player stats:");
         System.out.printf("%-15s %10s %8s %8s %10s %12s %8s%n",
                 "Name", "Money", "Wins", "Losses", "Total", "WinRate", "Net");
-        System.out.println("-------------------------------------------------------------------------------");
+        Debug.print("-------------------------------------------------------------------------------");
         for (int i = 1; i < gameSession.players.size(); i++) {
             Player p = gameSession.players.get(i);
             String name = p.getPlayerName();
@@ -149,10 +150,10 @@ public class BjDriver {
             System.out.printf("%-18s %5.2f$ %5d %8d %11d %12s %10.2f$%n",
                     name, money, wins, losses, total, winRate, net);
         }
-        System.out.println("-------------------------------------------------------------------------------\n");
+        Debug.print("-------------------------------------------------------------------------------\n");
 
-        System.out.println("Thank you for using my program!");
-        System.out.println("Program created by Vincent Welbourne");
+        Debug.print("Thank you for using my program!");
+        Debug.print("Program created by Vincent Welbourne");
 
         keyboard.close();
     }

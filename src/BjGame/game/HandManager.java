@@ -1,7 +1,8 @@
-package game;
+package BjGame.game;
 
-import shared.Card;
-import shared.Player;
+import BjGame.Debug;
+import BjGame.shared.Card;
+import BjGame.shared.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +48,16 @@ public class HandManager {
 
     /**
      * Method for the hit action to draw a card for the player used in 'Hit' and 'Double'
-     * @param p shared.Player
+     * @param p BjGame.shared.Player
      * @param draw Card drawn
      * @return true for bust else false
      */
     public boolean hitAction(Player p, Card draw) {
         this.addCard(draw);
         p.setCardTotal(this.getTotal());
-        System.out.println(p.getPlayerName() + " drew: " + draw + " (total: " + this.getTotal() + ")");
+        Debug.print(p.getPlayerName() + " drew: " + draw + " (total: " + this.getTotal() + ")");
         if (this.getTotal() > 21) {
-            System.out.println(p.getPlayerName() + " busted!");
+            Debug.print(p.getPlayerName() + " busted!");
             return true;
         }
         return false;
@@ -64,7 +65,7 @@ public class HandManager {
 
     /**
      * Attempt to double the player's bet, perform a single hit, and force stand.
-     * @param p the shared.Player to double for
+     * @param p the BjGame.shared.Player to double for
      * @return Boolean.TRUE if busted, FALSE if not busted, null if double was not allowed.
      */
     public Boolean doubleAction(Player p, Card doubleCard) {
@@ -72,8 +73,7 @@ public class HandManager {
         double currentBet = p.getBet();
         p.adjustMoney(-currentBet);
         p.setBet(currentBet * 2);
-        System.out.println(p.getPlayerName() + " doubles to $" + p.getBet() + ". Remaining: $" + (int)p.getMoney());
-        // Double forces a stand, exitHand = true regardless of busted
+        Debug.print(p.getPlayerName() + " doubles to $" + p.getBet() + ". Remaining: $" + (int)p.getMoney());
         return this.hitAction(p, doubleCard);
     }
 

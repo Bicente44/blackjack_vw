@@ -1,4 +1,4 @@
-package shared;
+package BjGame.shared;
 
 /*
  * Program created by Vincent Welbourne
@@ -25,7 +25,7 @@ public abstract class Card {
     private final String rank; 	// Ace, 2, king etc..
 
     /**
-     * shared.Card constructor. Sets the fields of the requirements of what makes a card.
+     * BjGame.shared.Card constructor. Sets the fields of the requirements of what makes a card.
      * @param value Value of the actual card..
      * @param suit The suit of the card ex: Clubs, Diamonds..
      * @param rank The rank of the card ex: Ace, 2, King..

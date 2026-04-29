@@ -7,29 +7,29 @@
 ## Planned tasks
 
 - TERM BREAK REFACTOR:
-    - [ ] Separate server & client code, essentially choose host or join, for host you create server
-  on a daemon and join that server on a separate thread. If host leaves they will still be hosting
-  and can choose to further close the server.
-    - [ ] Object serialization, send player and deck data through the stream. (server serves to client still tho)
+    - [ ] Separate BjGame.server & BjGame.client code, essentially choose host or join, for host you create BjGame.server
+  on a daemon and join that BjGame.server on a separate thread. If host leaves they will still be hosting
+  and can choose to further close the BjGame.server.
+    - [ ] Object serialization, send player and deck data through the stream. (BjGame.server serves to BjGame.client still tho)
     - [ ] Add JFX & Gradle
 
 
 - Next important steps program wide
     - [ ] Improve bet entry system with timer
-    - [ ] Fix game start initialize deck (shared.Player 1 and rounds == 0 should access game start)
+    - [ ] Fix BjGame.game start initialize deck (BjGame.shared.Player 1 and rounds == 0 should access BjGame.game start)
     - [ ] Set minimum table bets with card initialization phase
 
-- game.GameSession System
+- BjGame.game.GameSession System
     - [ ] Make the ability to Split
 
 - Driver
-    - [ ] Separate from Main, launches other threads (depending on what option server or client).
+    - [ ] Separate from BjGame.Main, launches other threads (depending on what option BjGame.server or BjGame.client).
     - [ ] Complete basic strategy sheet
 
 - Multiplayer Features
     - [ ] Make player timeout feature
     - [ ] Make a way of creating multiple players (At the moment I create a single instance, id need a loop).
-    - [ ] ^ With this also need a way of detecting when a player leaves mid-game, of after the game to remove them.
+    - [ ] ^ With this also need a way of detecting when a player leaves mid-BjGame.game, of after the BjGame.game to remove them.
 
 ## Learning curve / important for the future
 - This program is very complicated to make multiplayer the way it stands, I'll have to refactor

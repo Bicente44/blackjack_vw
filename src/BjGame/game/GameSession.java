@@ -1,12 +1,13 @@
-package game;
+package BjGame.game;
 
-import shared.Card;
-import shared.Player;
+import BjGame.Debug;
+import BjGame.shared.Card;
+import BjGame.shared.Player;
 
 import java.util.*;
 
 /**
- * This class is the Blackjack work class, it is what composes the game and brings it all together.
+ * This class is the Blackjack work class, it is what composes the BjGame.game and brings it all together.
  * Utilizes the utility methods in BjUtilities.
  *
  * @author Vincent Wrlbourne
@@ -35,11 +36,11 @@ public class GameSession {
 
     /**
      * Method to draw a card from the static deck list in BjWork
-     * @return shared.Card drawn
+     * @return BjGame.shared.Card drawn
      */
     public synchronized Card drawCard() {
         if (deck == null || deck.isEmpty()) {
-            System.out.println("shared.Deck empty, reshuffling.");
+            Debug.print("BjGame.shared.Deck empty, reshuffling.");
             deck = new LinkedList<>(Shuffle.shuffle());
         }
         return deck.remove(0);
@@ -62,7 +63,7 @@ public class GameSession {
         boolean dealerBJ = (dealerHand.getCards().size() == 2 && dealerHand.getTotal() == 21);
 
         if (dealerBJ) {
-            System.out.println("\nDealer has blackjack, all players stand.");
+            Debug.print("\nDealer has blackjack, all players stand.");
             // force every player to stand
             for (int i = 1; i < numPlayers; i++) {
                 bjStand.set(i, true);
@@ -77,7 +78,7 @@ public class GameSession {
             boolean playerBJ = (ph.getCards().size() == 2 && ph.getTotal() == 21);
             bjStand.set(i, playerBJ);
             if (playerBJ) {
-                System.out.println(players.get(i).getPlayerName() + " has Blackjack and will stand.");
+                Debug.print(players.get(i).getPlayerName() + " has Blackjack and will stand.");
             }
         }
     }
@@ -95,7 +96,7 @@ public class GameSession {
         if (p == null) return;
         // If player has no money, skip them
         if (p.getMoney() <= 0) {
-            System.out.println(p.getPlayerName() + " has no money, bet is 0.");
+            Debug.print(p.getPlayerName() + " has no money, bet is 0.");
             p.setBet(0);
             return;
         }
@@ -105,28 +106,28 @@ public class GameSession {
                 bet = keyboard.nextInt();
                 // Validate
                 if (bet < MIN_BET) {
-                    System.out.println("Bet must be at least $" + MIN_BET + ".");
+                    Debug.print("Bet must be at least $" + MIN_BET + ".");
                     continue;
                 }
                 if (bet > (int)p.getMoney()) {
-                    System.out.println("Insufficient funds. You only have $" + (int)p.getMoney() + ".");
+                    Debug.print("Insufficient funds. You only have $" + (int)p.getMoney() + ".");
                     continue;
                 }
                 // valid bet
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("Please enter a whole number for the bet.");
+                Debug.print("Please enter a whole number for the bet.");
                 keyboard.nextLine();
             }
         }
         // store bet and deduct from player's money now
         p.setBet(bet);
         p.adjustMoney(-bet);
-        System.out.println(p.getPlayerName() + " placed $" + bet + ". Remaining: $" + (int)p.getMoney());
+        Debug.print(p.getPlayerName() + " placed $" + bet + ". Remaining: $" + (int)p.getMoney());
     }
 
     /**
-     * Method to deal with the first and second pass at game start
+     * Method to deal with the first and second pass at BjGame.game start
      */
     public void playerPass(){
         if (hands.size() != players.size()) {
@@ -136,23 +137,23 @@ public class GameSession {
         for (int i = 1; i < numPlayers; i++) {
             Card c = drawCard();
             hands.get(i).addCard(c);
-            System.out.println(players.get(i).getPlayerName() + ": " + c);
+            Debug.print(players.get(i).getPlayerName() + ": " + c);
         }
     }
 
     /**
-     * Handles players, starts a game and does cleanup for next round
+     * Handles players, starts a BjGame.game and does cleanup for next round
      */
     public void game() {
         if (deck == null) {
-            System.out.println("shared.Deck not initialized or empty, creating and shuffling now.");
+            Debug.print("BjGame.shared.Deck not initialized or empty, creating and shuffling now.");
             deck = Shuffle.shuffle();
-            // Calculate player list size plus dealer card amount to see if game may start or reshuffle
+            // Calculate player list size plus dealer card amount to see if BjGame.game may start or reshuffle
         } else if (deck.size() < (players.size() * 2) + 2) {
             deck = Shuffle.shuffle();
         }
         if (players.isEmpty() || hands.size() != players.size()) {
-            System.out.println("Debug ahh, player list is broken");
+            Debug.print("BjGame.Debug ahh, player list is broken");
         }
 
         // ALL PLAYERS PLACE BETS HERE
@@ -181,10 +182,10 @@ public class GameSession {
     }
 
     /**
-     * Starts game after bets are placed allows users to interact and place bets
+     * Starts BjGame.game after bets are placed allows users to interact and place bets
      */
     public void gameStart() {
-        // Clear for game start
+        // Clear for BjGame.game start
         for (HandManager h : hands) h.clear();
         roundOver = false;
         bjStand.clear();
@@ -199,7 +200,7 @@ public class GameSession {
         // Dealer upcard
         dealerUp = drawCard();
         hands.get(0).addCard(dealerUp);
-        System.out.println("Dealer: " + dealerUp);
+        Debug.print("Dealer: " + dealerUp);
 
         // Second pass: deal second card to each player
         playerPass();
@@ -207,9 +208,9 @@ public class GameSession {
         // Dealer hidden card
         Card dealerHidden = drawCard();
         hands.get(0).addCard(dealerHidden);
-        System.out.println("Dealer: ?? (hidden)");
+        Debug.print("Dealer: ?? (hidden)");
 
-        // Update totals on shared.Player objects
+        // Update totals on BjGame.shared.Player objects
         for (int i = 0; i < numPlayers; i++) {
             players.get(i).setCardTotal(hands.get(i).getTotal());
         }
@@ -239,7 +240,7 @@ public class GameSession {
 
         while (!exitHand && !roundOver) {
             System.out.print("\nDealer upcard: " + dealerUp.getValue());
-            System.out.println("\n" + p.getPlayerName() + " total: " + hand.getTotal());
+            Debug.print("\n" + p.getPlayerName() + " total: " + hand.getTotal());
             System.out.print(MENU_ACTIONS);
             try {
                 action = BjDriver.keyboard.nextInt();
@@ -253,17 +254,17 @@ public class GameSession {
                         break;
 //		Stand
                     case 2:
-                        System.out.println(p.getPlayerName() + " stands with " + hand.getTotal() + "\n");
+                        Debug.print(p.getPlayerName() + " stands with " + hand.getTotal() + "\n");
                         exitHand = true;
                         break;
 //		Double
                     case 3:
                         if (p.getBet() <= 0) {
-                            System.out.println(p.getPlayerName() + " has no active bet to double.");
+                            Debug.print(p.getPlayerName() + " has no active bet to double.");
                             break;
                         }
                         if (p.getMoney() < p.getBet()) {
-                            System.out.println(p.getPlayerName() + " cannot double — insufficient funds.");
+                            Debug.print(p.getPlayerName() + " cannot double — insufficient funds.");
                             break;
                         }
                         Card doubleCard = drawCard();
@@ -281,12 +282,12 @@ public class GameSession {
 
                      */
                     default:
-                        System.out.println("Invalid option, please pick a number between (1 - 2)\n");
+                        Debug.print("Invalid option, please pick a number between (1 - 2)\n");
                         break;
 
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Please enter a valid number!");
+                Debug.print("Please enter a valid number!");
                 BjDriver.keyboard.nextLine();
             }
         }
@@ -301,20 +302,20 @@ public class GameSession {
 
         // Reveal hidden card
         if (dealerHand.getCards().size() > 1) {
-            System.out.println("Dealer reveals hidden card: " + dealerHand.getCards().get(1));
+            Debug.print("Dealer reveals hidden card: " + dealerHand.getCards().get(1));
         } else {
-            System.out.println("Dealer has no hidden card, Error??.");
+            Debug.print("Dealer has no hidden card, Error??.");
         }
-        System.out.println("Dealer total: " + dealerHand.getTotal());
+        Debug.print("Dealer total: " + dealerHand.getTotal());
 
         while (dealerHand.getTotal() < 17) {
             Card draw = drawCard();
             dealerHand.addCard(draw);
-            System.out.println("Dealer draws: " + draw + " (total: " + dealerHand.getTotal() + ")");
+            Debug.print("Dealer draws: " + draw + " (total: " + dealerHand.getTotal() + ")");
         }
 
         dealer.setCardTotal(dealerHand.getTotal());
-        System.out.println("Dealer final total: " + dealerHand.getTotal());
+        Debug.print("Dealer final total: " + dealerHand.getTotal());
 
         endGameResults();
     }
@@ -341,42 +342,42 @@ public class GameSession {
 
             if (playerTotal > 21) {
                 // player busted dealer wins
-                System.out.println(p.getPlayerName() + " busted. Dealer wins.");
+                Debug.print(p.getPlayerName() + " busted. Dealer wins.");
                 dealer.addWin();
                 p.addLoss();
             } else if (playerBlackjack && dealerBlackjack) {
                 // Both have natural blackjack, push
-                System.out.println(p.getPlayerName() + " and Dealer have Blackjack, bets returned.");
+                Debug.print(p.getPlayerName() + " and Dealer have Blackjack, bets returned.");
                 p.adjustMoney(bet);
             } else if (playerBlackjack) {
-                // shared.Player natural blackjack
-                System.out.println(p.getPlayerName() + " has Blackjack! Pays 3:2.");
+                // BjGame.shared.Player natural blackjack
+                Debug.print(p.getPlayerName() + " has Blackjack! Pays 3:2.");
                 p.addWin();
                 dealer.addLoss();
                 double payout = Math.round(bet * 2.5); // round to nearest whole dollar
                 p.adjustMoney(payout);
             } else if (dealerBlackjack) {
                 // Dealer natural blackjack
-                System.out.println("Dealer has Blackjack. " + p.getPlayerName() + " loses.");
+                Debug.print("Dealer has Blackjack. " + p.getPlayerName() + " loses.");
                 dealer.addWin();
                 p.addLoss();
             } else if (dealerTotal > 21) {
                 // dealer busted, player wins
-                System.out.println("Dealer busted. " + p.getPlayerName() + " wins.");
+                Debug.print("Dealer busted. " + p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
                 p.adjustMoney(bet * 2); // return bet + winnings
             } else if (playerTotal > dealerTotal) {
-                System.out.println(p.getPlayerName() + " wins.");
+                Debug.print(p.getPlayerName() + " wins.");
                 p.addWin();
                 dealer.addLoss();
                 p.adjustMoney(bet * 2);
             } else if (playerTotal < dealerTotal) {
-                System.out.println("Dealer wins.");
+                Debug.print("Dealer wins.");
                 dealer.addWin();
                 p.addLoss();
             } else {
-                System.out.println("Push. Bets are returned.");
+                Debug.print("Push. Bets are returned.");
                 p.adjustMoney(bet);
             }
             // reset player's bet for next round
