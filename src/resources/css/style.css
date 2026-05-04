@@ -5,7 +5,7 @@
      #D4AF37  gold       — primary accent
      #e8c84a  gold-light — hover
      #b89620  gold-dark  — pressed
-     #5a7a96  muted      — secondary text / divider
+     #5a7a96  muted      — labels / divider text
      #2e4a62  dim        — hints / footer
 */
 
@@ -72,7 +72,46 @@
     -fx-opacity: 0.8;
 }
 
-/* ── Buttons ───────────────────────────────────────────────────────────── */
+/* ── Auth block (state 1) ──────────────────────────────────────────────── */
+
+.auth-block {
+    -fx-padding: 4 0 0 0;
+}
+
+.auth-input {
+    -fx-background-color: #0d1924;
+    -fx-text-fill: #dce8f0;
+    -fx-prompt-text-fill: #2a4560;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 10 12;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 13px;
+}
+
+.auth-input:focused {
+    -fx-border-color: #D4AF37;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.12), 6, 0, 0, 0);
+}
+
+.guest-link {
+    -fx-text-fill: #2e4a62;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-underline: false;
+    -fx-padding: 2 0 0 0;
+}
+
+.guest-link:hover {
+    -fx-text-fill: #5a7a96;
+}
+
+/* ── Buttons (state 2 + shared) ────────────────────────────────────────── */
 
 .button-row {
     -fx-padding: 8 0 8 0;
@@ -89,6 +128,7 @@
     -fx-pref-width: 152;
 }
 
+/* HOST — filled gold */
 .host-btn {
     -fx-background-color: #D4AF37;
     -fx-text-fill: #0b1624;
@@ -108,6 +148,7 @@
     -fx-effect: none;
 }
 
+/* JOIN / LOGIN — outlined gold */
 .join-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #D4AF37;
@@ -155,4 +196,155 @@
 
 .footer-link:hover {
     -fx-text-fill: #D4AF37;
+}
+
+/* ── Logout link ───────────────────────────────────────────────────────── */
+
+.logout-link {
+    -fx-text-fill: #1e3a52;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 10px;
+    -fx-font-style: italic;
+    -fx-underline: false;
+    -fx-padding: 0;
+}
+
+.logout-link:hover {
+    -fx-text-fill: #5a7a96;
+}
+
+/* ── Shared panel title (HostUI / JoinUI) ──────────────────────────────── */
+
+.panel-title {
+    -fx-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.20), 14, 0.2, 0, 0);
+}
+
+/* ── Field label ───────────────────────────────────────────────────────── */
+
+.field-label {
+    -fx-fill: #5a7a96;
+    -fx-font-family: "System";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+/* ── IP chip (HostUI) ──────────────────────────────────────────────────── */
+
+.ip-chip {
+    -fx-background-color: #0d1924;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-max-width: infinity;
+}
+
+.ip-chip:hover {
+    -fx-border-color: #D4AF37;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.10), 6, 0, 0, 0);
+}
+
+.ip-value {
+    -fx-fill: #dce8f0;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 15px;
+}
+
+.copy-icon {
+    -fx-fill: #2e4a62;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+}
+
+.copy-icon-done {
+    -fx-fill: #D4AF37;
+}
+
+/* ── Player table (HostUI) ─────────────────────────────────────────────── */
+
+.player-table {
+    -fx-background-color: #0d1924;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-table-cell-border-color: transparent;
+}
+
+.player-table .column-header-background {
+    -fx-background-color: #0b1624;
+}
+
+.player-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #1a2e44 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.player-table .column-header .label {
+    -fx-text-fill: #5a7a96;
+    -fx-font-family: "System";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.player-table .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #0f1e30 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.player-table .table-row-cell:selected {
+    -fx-background-color: rgba(212,175,55,0.07);
+}
+
+.player-table .table-cell {
+    -fx-text-fill: #dce8f0;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-padding: 6 8;
+}
+
+.player-table .placeholder .label {
+    -fx-text-fill: #2e4a62;
+    -fx-font-family: "Georgia";
+    -fx-font-style: italic;
+    -fx-font-size: 12px;
+}
+
+/* Scrollbar inside table */
+.player-table .scroll-bar {
+    -fx-background-color: #0d1924;
+}
+
+.player-table .scroll-bar .thumb {
+    -fx-background-color: #1a2e44;
+    -fx-background-radius: 2;
+}
+
+/* ── Exit button (shared) ──────────────────────────────────────────────── */
+
+.exit-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2e4a62;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1.5;
+}
+
+.exit-btn:hover {
+    -fx-text-fill: #5a7a96;
+    -fx-border-color: #2e4a62;
+}
+
+.exit-btn:pressed {
+    -fx-background-color: rgba(46,74,98,0.15);
+    -fx-effect: none;
 }

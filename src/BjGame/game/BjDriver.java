@@ -9,6 +9,15 @@ package BjGame.game;/*
 
 import BjGame.Debug;
 import BjGame.shared.Player;
+import BjGame.ui.ConnectUI;
+import BjGame.ui.HostConnectUI;
+
+import BjGame.ui.HostUI;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,14 +27,95 @@ import java.util.Scanner;
  *
  * @author Vincent Welbourne
  */
-public class BjDriver {
+public class BjDriver extends Application {
+    public final static int START_CASH = 500;
+    private GameSession gameSession;
+    private StackPane root;
     public static Scanner keyboard = new Scanner(System.in);
-    private static boolean LOOP = true;
     public static int roundsPlayed = 0;
     public static boolean noCards = true;
-    public static String playerName = "BjGame.shared.Player";
-    public final static int START_CASH = 500;
-    public static int PLAYER_ID = 1;
+    private String loggedInUsername = null;
+
+
+    @Override
+    public void start(Stage stage) {
+        root = new StackPane();
+        root.getStylesheets().add("/css/style.css");
+
+        showHomeScreen();
+
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Blackjack - Vincent Welbourne");
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
+    }
+
+    @Override
+    public void stop() {
+        Debug.println("Closing app...");
+    }
+
+    private void showHomeScreen() {
+        HostConnectUI homeScreen = new HostConnectUI();
+
+        homeScreen.setOnLogin(() -> {
+            String username = homeScreen.usernameField.getText();
+            Debug.println("Login attempt: " + username);
+            // TODO authenticate player
+        });
+        homeScreen.setOnGuest(() -> {
+            loggedInUsername = "Guest";
+            Debug.println("Continuing as guest");
+            // TODO create a guest Player
+        });
+        homeScreen.setOnHost(() -> {
+            Debug.println("Host selected");
+            showHostUI();
+        });
+        homeScreen.setOnJoin(() -> {
+            Debug.println("Join selected");
+            showJoinUI();
+        });
+        homeScreen.setOnLogout(() -> {
+            loggedInUsername = null;
+            Debug.println("Logged out");
+        });
+        root.getChildren().setAll(homeScreen.build());
+    }
+
+    private void showHostUI() {
+        HostUI hostUI = new HostUI();
+
+        // TODO start up the game server on a daemon and run players on a separate thread
+
+        hostUI.setOnStart(() -> {
+            Debug.println("Starting game as host...");
+            // TODO showGameTable();
+        });
+
+        hostUI.setOnExit(() -> showHomeScreen());
+
+        root.getChildren().setAll(hostUI.build());
+    }
+
+    private void showJoinUI() {
+        ConnectUI connectUI = new ConnectUI();
+
+        connectUI.setOnConnect(() -> {
+            String ip = connectUI.getHostAddress();
+            if (ip.isEmpty()) {
+                Debug.println("No IP entered");
+                return;
+            }
+            Debug.println("Connecting to: " + ip);
+            // TODO show the lobby ui excluding management permissions
+        });
+
+        connectUI.setOnExit(() -> showHomeScreen());
+
+        root.getChildren().setAll(connectUI.build());
+    }
 
     /**
      * This is where the BjGame.game starts you get options from start BjGame.game, help and exit.
@@ -34,7 +124,7 @@ public class BjDriver {
      *
      * @param args no commandline arguments
      */
-    public static void launch(String[] args) {
+    /*public static void launch(String[] args) {
 
         Player dealer = new Player.Dealer(0, "Dealer", 0, 0.0, 0, 0, 0.0);
         GameSession gameSession = new GameSession();
@@ -47,7 +137,7 @@ public class BjDriver {
         if (playerName.isEmpty()) {
             playerName = "BjGame.shared.Player"+PLAYER_ID;
         }
-        //TODO: Eventually make this capable for each player that joins the BjGame.game (For now just the only 1 player that joins)
+        //TODO Eventually make this capable for each player that joins the BjGame.game (For now just the only 1 player that joins)
         Player player = new Player.HumanPlayer(PLAYER_ID, playerName, 0, START_CASH, 0, 0, 0.0);
         gameSession.players.add(player);
         gameSession.hands.add(new HandManager());
@@ -157,4 +247,5 @@ public class BjDriver {
 
         keyboard.close();
     }
+    */
 }

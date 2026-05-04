@@ -23,7 +23,12 @@ run {
 
 sourceSets {
     main {
-        java.srcDirs = ['src']
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src/resources']
+        }
     }
 }
 

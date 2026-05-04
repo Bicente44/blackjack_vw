@@ -1,5 +1,8 @@
 package BjGame;
 
+import BjGame.game.BjDriver;
+import javafx.application.Application;
+
 /**
  * BjGame.Main entry point of the program, launches BjGame.client/BjGame.server
  *
@@ -11,7 +14,7 @@ public class Main {
         if (headless) {
             Debug.println("Headless BjGame.server mode, not yet implemented.");
         } else {
-            BjGame.game.BjDriver.launch(args);
+            Application.launch(BjDriver.class, args);
         }
     }
 }
