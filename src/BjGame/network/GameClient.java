@@ -1,4 +1,4 @@
-package BjGame.client;
+package BjGame.network;
 
 /**
  * Connects to BjGame.server

@@ -4,57 +4,52 @@ package BjGame.shared;/*
  *
  */
 
+import java.io.Serializable;
+import java.util.UUID;
+
 /**
  * BjGame.shared.Player object
  */
-public abstract class Player {
-    private final int PLAYER_ID;
-    private final String playerName;
+public abstract class Player implements Serializable {
+    private static final long serialVersion = 1L;
+    private final String PLAYER_ID;
+    private String playerName;
+    private String password;
     private double money;
     private int wins;
     private int losses;
     private int cardTotal;
     private double bet;
+
     /**
      * BjGame.shared.Player constructor
      */
-    protected Player(int PLAYER_ID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
-        this.PLAYER_ID = PLAYER_ID;
+    protected Player(String playerName, String password, double money) {
+        this.PLAYER_ID = UUID.randomUUID().toString();
         this.playerName = playerName;
+        this.password = password;
         this.money = money;
-        this.wins = wins;
-        this.losses = losses;
-        this.cardTotal = cardTotal;
-        this.bet = bet;
     }
 
     /**
      *
      * @return
      */
-    public int getPlayerID() {
+    public String getPlayerID() {
         return PLAYER_ID;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getPlayerName() {
         return playerName;
     }
+    public void setPlayerName(String playerName) { this.playerName = playerName; }
 
-    /**
-     *
-     * @return
-     */
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
     public double getMoney() {
         return money;
     }
-    /**
-     *
-     * @param money
-     */
     public void setMoney(double money) {
         this.money = money;
     }
@@ -62,7 +57,6 @@ public abstract class Player {
     public double getBet() {
         return bet;
     }
-
     public void setBet(double bet) {
         this.bet = bet;
     }
@@ -71,47 +65,23 @@ public abstract class Player {
         this.money += x;
     }
 
-    /**
-     *
-     * @return player wins
-     */
     public int getWins() {
         return wins;
     }
-    /**
-     * addWin
-     */
     public void addWin() {
         this.wins++;
     }
 
-    /**
-     * getLosses
-     * @return player losses
-     */
     public int getLosses() {
         return losses;
     }
-    /**
-     * addLoss
-     */
     public void addLoss() {
         this.losses++;
     }
 
-    // Hand management
-
-    /**
-     *
-     * @return
-     */
     public int getCardTotal() {
         return cardTotal;
     }
-    /**
-     *
-     * @param cardTotal
-     */
     public void setCardTotal(int cardTotal) {
         this.cardTotal = cardTotal;
     }
@@ -121,16 +91,17 @@ public abstract class Player {
      * May change to seperate file later if complications arise.
      */
     public static class HumanPlayer extends Player {
-        public HumanPlayer(int playerID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
-            super(playerID, playerName, cardTotal, money, wins, losses, bet);
+        public HumanPlayer(String playerName, String password, double money) {
+            super(playerName, password, money);
         }
     }
+
     /**
      * Nested Dealer class, this is the dealer object will use its card total and player name (dealer)
      */
     public static class Dealer extends Player {
-        public Dealer(int playerID, String playerName, int cardTotal, double money, int wins, int losses, double bet) {
-            super(0, "Dealer", cardTotal, money, wins, losses, bet);
+        public Dealer(String playerName, String password, double money) {
+            super("Dealer", "password", 100000);
         }
     }
 }
