@@ -8,12 +8,11 @@ package BjGame.game;/*
  */
 
 import BjGame.Debug;
-import BjGame.ui.ConnectUI;
-import BjGame.ui.HostConnectUI;
+import BjGame.ui.*;
 
-import BjGame.ui.HostUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -39,7 +38,15 @@ public class BjDriver extends Application {
         root = new StackPane();
         root.getStylesheets().add("/css/style.css");
 
-        showHomeScreen();
+        StackPane contentPane = new StackPane();
+
+        showHomeScreen(contentPane);
+
+        BorderPane layout = new BorderPane();
+        layout.setCenter(contentPane);
+        layout.setBottom(new BottomBar(root).build());
+
+        root.getChildren().add(layout);
 
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Blackjack - Vincent Welbourne");
@@ -54,7 +61,7 @@ public class BjDriver extends Application {
         Debug.println("Program created by Vincent Welbourne");
     }
 
-    private void showHomeScreen() {
+    private void showHomeScreen(StackPane contentPane) {
         HostConnectUI homeScreen = new HostConnectUI();
 
         homeScreen.setOnLogin(() -> {
@@ -69,20 +76,20 @@ public class BjDriver extends Application {
         });
         homeScreen.setOnHost(() -> {
             Debug.println("Host selected");
-            showHostUI();
+            showHostUI(contentPane);
         });
         homeScreen.setOnJoin(() -> {
             Debug.println("Join selected");
-            showJoinUI();
+            showJoinUI(contentPane);
         });
         homeScreen.setOnLogout(() -> {
             loggedInUsername = null;
             Debug.println("Logged out");
         });
-        root.getChildren().setAll(homeScreen.build());
+        contentPane.getChildren().setAll(homeScreen.build());
     }
 
-    private void showHostUI() {
+    private void showHostUI(StackPane contentPane) {
         HostUI hostUI = new HostUI();
 
         // TODO start up the game server on a daemon and run players on a separate thread
@@ -92,12 +99,12 @@ public class BjDriver extends Application {
             // TODO showGameTable();
         });
 
-        hostUI.setOnExit(() -> showHomeScreen());
+        hostUI.setOnExit(() -> showHomeScreen(contentPane));
 
-        root.getChildren().setAll(hostUI.build());
+        contentPane.getChildren().setAll(hostUI.build());
     }
 
-    private void showJoinUI() {
+    private void showJoinUI(StackPane contentPane) {
         ConnectUI connectUI = new ConnectUI();
 
         connectUI.setOnConnect(() -> {
@@ -110,8 +117,8 @@ public class BjDriver extends Application {
             // TODO show the lobby ui excluding management permissions
         });
 
-        connectUI.setOnExit(() -> showHomeScreen());
+        connectUI.setOnExit(() -> showHomeScreen(contentPane));
 
-        root.getChildren().setAll(connectUI.build());
+        contentPane.getChildren().setAll(connectUI.build());
     }
 }
