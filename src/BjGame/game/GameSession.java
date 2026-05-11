@@ -16,6 +16,7 @@ public class GameSession {
     public Card dealerUp;
     public List<Boolean> bjStand;
     public boolean roundOver;
+    public int numOfDecks = 1;
 
     public GameSession() {
         this.players  = new ArrayList<>();

@@ -8,6 +8,7 @@ package BjGame.game;/*
  */
 
 import BjGame.Debug;
+import BjGame.shared.Player;
 import BjGame.ui.*;
 
 import javafx.application.Application;
@@ -25,12 +26,9 @@ import java.util.Scanner;
  */
 public class BjDriver extends Application {
     public final static int START_CASH = 500;
-    private GameController gameSession;
     private StackPane root;
-    public static Scanner keyboard = new Scanner(System.in);
-    public static int roundsPlayed = 0;
-    public static boolean noCards = true;
     private String loggedInUsername = null;
+    GameController gameController = new GameController();
 
 
     @Override
@@ -96,7 +94,7 @@ public class BjDriver extends Application {
 
         hostUI.setOnStart(() -> {
             Debug.println("Starting game as host...");
-            // TODO showGameTable();
+            showGameTable(contentPane);
         });
 
         hostUI.setOnExit(() -> showHomeScreen(contentPane));
@@ -121,4 +119,35 @@ public class BjDriver extends Application {
 
         contentPane.getChildren().setAll(connectUI.build());
     }
+
+    private void showGameTable(StackPane contentPane) {
+        Debug.println("Showing game table...");
+
+        // Test add players:
+        gameController.gameSession.players.clear();
+        gameController.gameSession.players.add(new Player.Dealer("Dealer", "", 0));          // index 0 — dealer slot
+        gameController.gameSession.players.add(new Player.HumanPlayer("Vincent", "", START_CASH)); // index 1
+        gameController.gameSession.players.add(new Player.HumanPlayer("Alice",   "", START_CASH)); // index 2
+        loggedInUsername = "Vincent";
+
+        GameUI table = new GameUI();
+
+        // Add seats for each non-dealer player
+        for (int i = 1; i < gameController.gameSession.players.size(); i++) {
+            Player p = gameController.gameSession.players.get(i);
+            boolean isLocal = p.getPlayerName().equals(loggedInUsername);
+            table.addSeat(p.getPlayerName(), isLocal);
+        }
+
+        table.setOnHit(()    -> gameController.hit());
+        table.setOnStand(()  -> gameController.stand());
+        table.setOnDouble(() -> gameController.doubleDown());
+        table.setOnHelp(()   -> { /* show help overlay */ });
+
+        gameController.setUI(table);
+        gameController.startRound();
+
+        contentPane.getChildren().setAll(table.build());
+    }
+
 }

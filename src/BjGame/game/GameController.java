@@ -3,6 +3,8 @@ package BjGame.game;
 import BjGame.Debug;
 import BjGame.shared.Card;
 import BjGame.shared.Player;
+import BjGame.ui.GameUI;
+import BjGame.ui.PlayerSeat;
 
 import java.util.*;
 
@@ -13,14 +15,13 @@ import java.util.*;
  * @author Vincent Wrlbourne
  */
 public class GameController {
-    public static final String MENU_ACTIONS = "Select an option for your next move (1-4).\n"
-            + "1. Hit\n"
-            + "2. Stand\n"
-            + "3. Double\n"
-            + "4. Split\n" +
-            "> ";
-    HandManager handManager = new HandManager();
     GameSession gameSession = new GameSession();
+    private GameUI gameUI;
+    private int currentPlayerIndex = 1;
+
+    public void setUI(GameUI gameUI) {
+        this.gameUI = gameUI;
+    }
 
     /**
      * Method to draw a card from the static deck list in BjWork
@@ -29,7 +30,7 @@ public class GameController {
     public synchronized Card drawCard() {
         if (gameSession.deck == null || gameSession.deck.isEmpty()) {
             Debug.println("BjGame.shared.Deck empty, reshuffling.");
-            gameSession.deck = new LinkedList<>(Shuffle.shuffle());
+            gameSession.deck = Shuffle.shuffle(gameSession.numOfDecks);
         }
         return gameSession.deck.remove(0);
     }
@@ -72,49 +73,6 @@ public class GameController {
     }
 
     /**
-     * Allows a p player place a bet
-     *
-     * @param p Player
-     */
-    public void placeBet(Player p) {
-        java.util.Scanner keyboard = BjDriver.keyboard;
-        final int MIN_BET = 5; // TODO CHANGE LATER TO BE SET ON INITIALIZATION
-        int bet = 0;
-
-        if (p == null) return;
-        // If player has no money, skip them
-        if (p.getMoney() <= 0) {
-            Debug.println(p.getPlayerName() + " has no money, bet is 0.");
-            p.setBet(0);
-            return;
-        }
-        while (true) {
-            Debug.print(p.getPlayerName() + " - You have $" + (int)p.getMoney() + ". Enter bet (min $" + MIN_BET + "): ");
-            try {
-                bet = keyboard.nextInt();
-                // Validate
-                if (bet < MIN_BET) {
-                    Debug.println("Bet must be at least $" + MIN_BET + ".");
-                    continue;
-                }
-                if (bet > (int)p.getMoney()) {
-                    Debug.println("Insufficient funds. You only have $" + (int)p.getMoney() + ".");
-                    continue;
-                }
-                // valid bet
-                break;
-            } catch (InputMismatchException e) {
-                Debug.println("Please enter a whole number for the bet.");
-                keyboard.nextLine();
-            }
-        }
-        // store bet and deduct from player's money now
-        p.setBet(bet);
-        p.adjustMoney(-bet);
-        Debug.println(p.getPlayerName() + " placed $" + bet + ". Remaining: $" + (int)p.getMoney());
-    }
-
-    /**
      * Method to deal with the first and second pass at BjGame.game start
      */
     public void playerPass(){
@@ -129,81 +87,57 @@ public class GameController {
         }
     }
 
-    /**
-     * Handles players, starts a BjGame.game and does cleanup for next round
-     */
-    public void game() {
-        if (gameSession.deck == null) {
-            Debug.println("BjGame.shared.Deck not initialized or empty, creating and shuffling now.");
-            gameSession.deck = Shuffle.shuffle();
-            // Calculate player list size plus dealer card amount to see if BjGame.game may start or reshuffle
-        } else if (gameSession.deck.size() < (gameSession.players.size() * 2) + 2) {
-            gameSession.deck = Shuffle.shuffle();
+    public void startRound() {
+        if (gameSession.deck == null || gameSession.deck.size() < (gameSession.players.size() * 2) + 2) {
+            gameSession.deck = Shuffle.shuffle(gameSession.numOfDecks);
         }
-        if (gameSession.players.isEmpty() || gameSession.hands.size() != gameSession.players.size()) {
-            Debug.println("BjGame.Debug ahh, player list is broken");
-        }
-
-        // ALL PLAYERS PLACE BETS HERE
-        if (gameSession.players.size() > 1) {
-            for (int i = 1; i < gameSession.players.size(); i++) {
-                Player p = gameSession.players.get(i);
-                placeBet(p);
-            }
-        }
-
-        // Deal initial cards
         gameStart();
-
-        // Check for round end with dealer or player blackjack(s)
-        if (!gameSession.roundOver) {
-            for (int i = 1; i < gameSession.players.size(); i++) {
-                if (gameSession.roundOver) break;
-                playerTurn(i);
-            }
-            if (!gameSession.roundOver) {
-                dealerPlay();
-            }
-        }
-        for (HandManager h : GameSession.hands) h.clear();
-        for (Player p : GameSession.players) p.setCardTotal(0);
     }
 
     /**
      * Starts BjGame.game after bets are placed allows users to interact and place bets
      */
     public void gameStart() {
-        // Clear for BjGame.game start
-        for (HandManager h : GameSession.hands) h.clear();
+        for (HandManager h : gameSession.hands) h.clear();
         gameSession.roundOver = false;
         gameSession.bjStand.clear();
         for (int i = 0; i < gameSession.players.size(); i++) gameSession.bjStand.add(false);
 
-        int numPlayers = gameSession.players.size(); // including dealer at index 0
-
-        // First pass: deal one card to each player
         playerPass();
 
-        // TODO? Could make a method for dealer pass in the future...
-        // Dealer upcard
         gameSession.dealerUp = drawCard();
         gameSession.hands.get(0).addCard(gameSession.dealerUp);
-        Debug.println("Dealer: " + gameSession.dealerUp);
 
-        // Second pass: deal second card to each player
         playerPass();
 
-        // Dealer hidden card
         Card dealerHidden = drawCard();
         gameSession.hands.get(0).addCard(dealerHidden);
-        Debug.println("Dealer: ?? (hidden)");
 
-        // Update totals on BjGame.shared.Player objects
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < gameSession.players.size(); i++) {
             gameSession.players.get(i).setCardTotal(gameSession.hands.get(i).getTotal());
         }
-        // Check for blackjack to prevent further bets
+
+        if (gameUI != null) {
+            gameUI.getDealer().clearHand();
+            Card up = gameSession.dealerUp;
+            gameUI.getDealer().addCard(up.getRank(), up.getSuit());
+            gameUI.getDealer().addHiddenCard();
+
+            for (int i = 1; i < gameSession.players.size(); i++) {
+                PlayerSeat seat = gameUI.getSeat(i - 1);
+                seat.clearHand();
+                for (Card c : gameSession.hands.get(i).getCards()) {
+                    seat.addCard(c.getRank(), c.getSuit());
+                }
+                seat.setTotal(gameSession.hands.get(i).getTotal(), false);
+            }
+        }
         checkBlackjack();
+
+        if (!gameSession.roundOver) {
+            currentPlayerIndex = 1;
+            playerTurn();
+        }
     }
 
     /**
@@ -211,100 +145,114 @@ public class GameController {
      * (Hit, Stand, Double and Split) --Eventually add surrender and insurance
      *
      */
-    public void playerTurn(int playerIndex) {
-        int action = 0;
-        Player p = gameSession.players.get(playerIndex);
-        HandManager hand = gameSession.hands.get(playerIndex);
-        boolean exitHand = false;
+    public void playerTurn() {
+        while (currentPlayerIndex < gameSession.players.size()) {
+        boolean standing = gameSession.bjStand.size() > currentPlayerIndex
+                && gameSession.bjStand.get(currentPlayerIndex);
+        if (!standing) break;
+        currentPlayerIndex++;
+    }
 
-        if (gameSession.roundOver) {
-            return;
-        }
+        if (currentPlayerIndex >= gameSession.players.size()) {
+        // All players done
+        if (gameUI != null) gameUI.setActionsEnabled(false);
+        dealerPlay();
+        return;
+    }
 
-        boolean playerStand = (gameSession.bjStand.size() > playerIndex && gameSession.bjStand.get(playerIndex));
-        if (playerStand) {
-            return;
-        }
+    // Activate this player's seat
+        if (gameUI != null) {
+            gameUI.setActionsEnabled(true);
+        PlayerSeat seat = gameUI.getSeat(currentPlayerIndex - 1);
+        seat.setActive(true);
+        seat.startTimer(30);
+    }
+}
 
-        while (!exitHand && !gameSession.roundOver) {
-            Debug.print("\nDealer upcard: " + gameSession.dealerUp.getValue());
-            Debug.println("\n" + p.getPlayerName() + " total: " + hand.getTotal());
-            Debug.print(MENU_ACTIONS);
-            try {
-                action = BjDriver.keyboard.nextInt();
-                switch (action) {
-//		Hit
-                    case 1:
-                        // Check if bust, else continue
-                        if (hand.hitAction(p, drawCard())) {
-                            exitHand = true;
-                        }
-                        break;
-//		Stand
-                    case 2:
-                        Debug.println(p.getPlayerName() + " stands with " + hand.getTotal() + "\n");
-                        exitHand = true;
-                        break;
-//		Double
-                    case 3:
-                        if (p.getBet() <= 0) {
-                            Debug.println(p.getPlayerName() + " has no active bet to double.");
-                            break;
-                        }
-                        if (p.getMoney() < p.getBet()) {
-                            Debug.println(p.getPlayerName() + " cannot double — insufficient funds.");
-                            break;
-                        }
-                        Card doubleCard = drawCard();
-                        Boolean dblResult = hand.doubleAction(p,doubleCard);
-                        if (dblResult == null) {
-                            break;
-                        } else {
-                            // Double performed force exit
-                            exitHand = true;
-                        }
-                        break;
-//		Split
-                    /*case 4:
-                        break;
+    public void hit() {
+        Player p = gameSession.players.get(currentPlayerIndex);
+        HandManager hand = gameSession.hands.get(currentPlayerIndex);
+        Card draw = drawCard();
+        boolean busted = hand.hitAction(p, draw);
+        Debug.println(p.getPlayerName() + " hits: " + draw + " total: " + hand.getTotal());
 
-                     */
-                    default:
-                        Debug.println("Invalid option, please pick a number between (1 - 2)\n");
-                        break;
-
-                }
-            } catch (InputMismatchException e) {
-                Debug.println("Please enter a valid number!");
-                BjDriver.keyboard.nextLine();
+        if (gameUI != null) {
+            PlayerSeat seat = gameUI.getSeat(currentPlayerIndex - 1);
+            seat.addCard(draw.getRank(), draw.getSuit());
+            seat.setTotal(hand.getTotal(), busted);
+            if (busted) {
+                seat.showNotification("BUST");
+                seat.setActive(false);
             }
         }
+
+        if (busted) {
+            currentPlayerIndex++;
+            playerTurn();
+        }
+    }
+
+    public void stand() {
+        Player p = gameSession.players.get(currentPlayerIndex);
+        Debug.println(p.getPlayerName() + " stands with " + gameSession.hands.get(currentPlayerIndex).getTotal());
+        gameSession.bjStand.set(currentPlayerIndex, true);
+
+        if (gameUI != null) {
+            gameUI.getSeat(currentPlayerIndex - 1).setActive(false);
+            gameUI.getSeat(currentPlayerIndex - 1).showNotification("STAND");
+        }
+
+        currentPlayerIndex++;
+        playerTurn();
+    }
+
+    public void doubleDown() {
+        Player p = gameSession.players.get(currentPlayerIndex);
+        HandManager hand = gameSession.hands.get(currentPlayerIndex);
+
+        if (p.getBet() <= 0 || p.getMoney() < p.getBet()) {
+            Debug.println("Cannot double — invalid bet state.");
+            return;
+        }
+
+        Card draw = drawCard();
+        boolean busted = hand.doubleAction(p, draw);
+        Debug.println(p.getPlayerName() + " doubles. Drew: " + draw);
+
+        if (gameUI != null) {
+            PlayerSeat seat = gameUI.getSeat(currentPlayerIndex - 1);
+            seat.addCard(draw.getRank(), draw.getSuit());
+            seat.setTotal(hand.getTotal(), busted);
+            seat.setBet((int) p.getBet());
+            seat.setActive(false);
+            if (busted) seat.showNotification("BUST");
+        }
+
+        currentPlayerIndex++;
+        playerTurn();
     }
 
     /**
      * Once all players finish their move, dealer reveals hidden card and acts.
      */
     public void dealerPlay() {
-        Player dealer = gameSession.players.get(0);
         HandManager dealerHand = gameSession.hands.get(0);
+        Card hidden = dealerHand.getCards().get(1);
 
-        // Reveal hidden card
-        if (dealerHand.getCards().size() > 1) {
-            Debug.println("Dealer reveals hidden card: " + dealerHand.getCards().get(1));
-        } else {
-            Debug.println("Dealer has no hidden card, Error??.");
+        if (gameUI != null) {
+            gameUI.getDealer().revealHiddenCard(hidden.getRank(), hidden.getSuit());
         }
-        Debug.println("Dealer total: " + dealerHand.getTotal());
+        Debug.println("Dealer reveals: " + hidden + " total: " + dealerHand.getTotal());
 
         while (dealerHand.getTotal() < 17) {
             Card draw = drawCard();
             dealerHand.addCard(draw);
-            Debug.println("Dealer draws: " + draw + " (total: " + dealerHand.getTotal() + ")");
+            Debug.println("Dealer draws: " + draw + " total: " + dealerHand.getTotal());
+            if (gameUI != null) gameUI.getDealer().addCard(draw.getRank(), draw.getSuit());
         }
 
-        dealer.setCardTotal(dealerHand.getTotal());
-        Debug.println("Dealer final total: " + dealerHand.getTotal());
-
+        if (gameUI != null) gameUI.getDealer().setTotal(dealerHand.getTotal());
+        gameSession.players.get(0).setCardTotal(dealerHand.getTotal());
         endGameResults();
     }
 
@@ -372,6 +320,6 @@ public class GameController {
             p.setBet(0);
         }
         // Clear totals for next round
-        for (Player p : GameSession.players) p.setCardTotal(0);
+        for (Player p : gameSession.players) p.setCardTotal(0);
     }
 }

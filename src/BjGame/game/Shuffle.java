@@ -18,39 +18,17 @@ import java.util.List;
  * @author Vincent Welbourne
  */
 public class Shuffle {
-    public static int numOfDecks;
 
     /**
-     *
-     * The actual shuffle object and method
-     *
-     * @return null
+     * Builds and shuffles a deck of the given number of standard 52-card decks.
+     * @param numOfDecks number of decks to use (1-8)
+     * @return shuffled list of cards
      */
-    public static List<Card> shuffle() {
-
-        if (BjDriver.roundsPlayed == 0) {
-            Debug.println("How many decks would you like to play with?");
-            do {
-                try {
-                    Debug.print("You may choose a number from 1-8.\n" + "> ");
-                    numOfDecks = BjDriver.keyboard.nextInt();
-                    break;
-                } catch (Exception e) {
-                    Debug.println("Please enter a valid number!");
-                    BjDriver.keyboard.nextLine();
-                }
-            } while (true);
-        }
+    public static List<Card> shuffle(int numOfDecks) {
         Deck deck = new Deck(numOfDecks);
         List<Card> deckList = deck.getDeck();
-        BjDriver.noCards = false;
-
-        // shuffle the deck
         Collections.shuffle(deckList);
-        Debug.println("BjGame.shared.Deck shuffled...");
-
-
+        Debug.println("Deck shuffled (" + numOfDecks + " deck(s)).");
         return deckList;
-
     }
 }

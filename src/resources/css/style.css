@@ -1,9 +1,7 @@
-/*
- * Blackjack — style.css
- * #0b1624 bg · #111e30 card · #D4AF37 gold · #0d1924 input · #1a2e44 border-dim · #5a7a96 muted · #2e4a62 dim
- */
+/* Blackjack — style.css
+   #0b1624 bg · #111e30 card · #D4AF37 gold · #0d1924 input · #1a2e44 border-dim · #5a7a96 muted · #2e4a62 dim */
 
-/* Root & Card */
+/* ── Root & Card ─────────────────────────────────────────────────────────── */
 
 .root-pane          { -fx-background-color: #0b1624; }
 
@@ -16,7 +14,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.70), 40, 0.2, 0, 12);
 }
 
-/* Header */
+/* ── Header ──────────────────────────────────────────────────────────────── */
 
 .header-suits {
     -fx-fill: #D4AF37;
@@ -48,7 +46,7 @@
     -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.20), 14, 0.2, 0, 0);
 }
 
-/* Dividers */
+/* ── Dividers ────────────────────────────────────────────────────────────── */
 
 .divider-line {
     -fx-stroke: #D4AF37;
@@ -67,7 +65,7 @@
     -fx-stroke-width: 1;
 }
 
-/* Inputs */
+/* ── Inputs ──────────────────────────────────────────────────────────────── */
 
 .auth-input {
     -fx-background-color: #0d1924;
@@ -87,7 +85,7 @@
     -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.12), 6, 0, 0, 0);
 }
 
-/* Buttons */
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
 
 .lobby-btn {
     -fx-font-family: "System";
@@ -134,10 +132,10 @@
     -fx-border-color: #1a2e44;
     -fx-border-width: 1.5;
 }
-.exit-btn:hover { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
+.exit-btn:hover  { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
 .exit-btn:pressed { -fx-background-color: rgba(46,74,98,0.15); -fx-effect: none; }
 
-/* Links */
+/* ── Links ───────────────────────────────────────────────────────────────── */
 
 .guest-link, .logout-link, .footer-link {
     -fx-background-color: transparent;
@@ -147,20 +145,20 @@
     -fx-padding: 0;
 }
 
-.guest-link { -fx-text-fill: #2e4a62; -fx-font-family: "Georgia"; -fx-font-size: 11px; -fx-font-style: italic; }
+.guest-link  { -fx-text-fill: #2e4a62; -fx-font-family: "Georgia"; -fx-font-size: 11px; -fx-font-style: italic; }
 .logout-link { -fx-text-fill: #1e3a52; -fx-font-family: "Georgia"; -fx-font-size: 10px; -fx-font-style: italic; }
 .footer-link { -fx-text-fill: #2e4a62; -fx-font-family: "System";  -fx-font-size: 11px; }
 
-.guest-link:hover { -fx-text-fill: #5a7a96; }
-.logout-link:hover { -fx-text-fill: #5a7a96; }
-.footer-link:hover { -fx-text-fill: #D4AF37; }
+.guest-link:hover   { -fx-text-fill: #5a7a96; }
+.logout-link:hover  { -fx-text-fill: #5a7a96; }
+.footer-link:hover  { -fx-text-fill: #D4AF37; }
 
-/* Footer */
+/* ── Footer ──────────────────────────────────────────────────────────────── */
 
-.footer-name { -fx-fill: #3a6080; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-font-style: italic; }
+.footer-name   { -fx-fill: #3a6080; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-font-style: italic; }
 .footer-bullet { -fx-fill: #2a4560; -fx-font-size: 12px; }
 
-/* Labels */
+/* ── Labels ──────────────────────────────────────────────────────────────── */
 
 .field-label {
     -fx-fill: #5a7a96;
@@ -169,7 +167,7 @@
     -fx-font-weight: bold;
 }
 
-/* IP chip */
+/* ── IP chip ─────────────────────────────────────────────────────────────── */
 
 .ip-chip {
     -fx-background-color: #0d1924;
@@ -185,7 +183,7 @@
 .copy-icon  { -fx-fill: #2e4a62; -fx-font-size: 14px; }
 .copy-icon-done { -fx-fill: #D4AF37; }
 
-/* Player table */
+/* ── Player table ────────────────────────────────────────────────────────── */
 
 .player-table {
     -fx-background-color: #0d1924;
@@ -195,24 +193,24 @@
 }
 
 .player-table .column-header-background { -fx-background-color: #0b1624; }
-.player-table .column-header { -fx-background-color: transparent; -fx-border-color: transparent transparent #1a2e44 transparent; -fx-border-width: 0 0 1 0; }
-.player-table .column-header .label { -fx-text-fill: #5a7a96; -fx-font-size: 10px; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT; }
-.player-table .table-row-cell { -fx-background-color: transparent; -fx-border-color: transparent transparent #0f1e30 transparent; -fx-border-width: 0 0 1 0; }
-.player-table .table-row-cell:selected { -fx-background-color: rgba(212,175,55,0.07); }
-.player-table .table-cell { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-padding: 6 8; }
-.player-table .placeholder .label { -fx-text-fill: #2e4a62; -fx-font-style: italic; -fx-font-size: 12px; }
-.player-table .scroll-bar { -fx-background-color: #0d1924; }
-.player-table .scroll-bar .thumb { -fx-background-color: #1a2e44; -fx-background-radius: 2; }
+.player-table .column-header            { -fx-background-color: transparent; -fx-border-color: transparent transparent #1a2e44 transparent; -fx-border-width: 0 0 1 0; }
+.player-table .column-header .label     { -fx-text-fill: #5a7a96; -fx-font-size: 10px; -fx-font-weight: bold; -fx-alignment: CENTER_LEFT; }
+.player-table .table-row-cell           { -fx-background-color: transparent; -fx-border-color: transparent transparent #0f1e30 transparent; -fx-border-width: 0 0 1 0; }
+.player-table .table-row-cell:selected  { -fx-background-color: rgba(212,175,55,0.07); }
+.player-table .table-cell               { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-padding: 6 8; }
+.player-table .placeholder .label       { -fx-text-fill: #2e4a62; -fx-font-style: italic; -fx-font-size: 12px; }
+.player-table .scroll-bar               { -fx-background-color: #0d1924; }
+.player-table .scroll-bar .thumb        { -fx-background-color: #1a2e44; -fx-background-radius: 2; }
 
-/* Settings */
+/* ── Settings ────────────────────────────────────────────────────────────── */
 
 .settings-section-label { -fx-fill: #5a7a96; -fx-font-size: 10px; -fx-font-weight: bold; }
-.settings-row-label { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 13px; }
-.settings-row-value { -fx-text-fill: #5a7a96; -fx-font-size: 10px; }
+.settings-row-label     { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 13px; }
+.settings-row-value     { -fx-text-fill: #5a7a96; -fx-font-size: 10px; }
 
-.settings-slider .track { -fx-background-color: #1a2e44; -fx-background-radius: 2; -fx-pref-height: 3px; }
-.settings-slider .thumb { -fx-background-color: #D4AF37; -fx-background-radius: 50%; -fx-pref-width: 14px; -fx-pref-height: 14px; }
-.settings-slider .thumb:hover { -fx-background-color: #e8c84a; }
+.settings-slider .track  { -fx-background-color: #1a2e44; -fx-background-radius: 2; -fx-pref-height: 3px; }
+.settings-slider .thumb  { -fx-background-color: #D4AF37; -fx-background-radius: 50%; -fx-pref-width: 14px; -fx-pref-height: 14px; }
+.settings-slider .thumb:hover   { -fx-background-color: #e8c84a; }
 .settings-slider .thumb:pressed { -fx-background-color: #b89620; }
 .settings-slider .colored-track-fill { -fx-background-color: #D4AF37; -fx-background-radius: 2; }
 
@@ -223,23 +221,23 @@
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 }
-.settings-dropdown:hover { -fx-border-color: #D4AF37; }
-.settings-dropdown .list-cell { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-background-color: transparent; -fx-padding: 4 8; }
-.settings-dropdown .arrow-button { -fx-background-color: transparent; }
-.settings-dropdown .arrow { -fx-background-color: #5a7a96; }
-.settings-dropdown .combo-box-popup .list-view { -fx-background-color: #0d1924; -fx-border-color: #1a2e44; }
-.settings-dropdown .combo-box-popup .list-cell { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-background-color: transparent; -fx-padding: 6 10; }
-.settings-dropdown .combo-box-popup .list-cell:hover { -fx-background-color: rgba(212,175,55,0.08); }
+.settings-dropdown:hover                           { -fx-border-color: #D4AF37; }
+.settings-dropdown .list-cell                      { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-background-color: transparent; -fx-padding: 4 8; }
+.settings-dropdown .arrow-button                   { -fx-background-color: transparent; }
+.settings-dropdown .arrow                          { -fx-background-color: #5a7a96; }
+.settings-dropdown .combo-box-popup .list-view     { -fx-background-color: #0d1924; -fx-border-color: #1a2e44; }
+.settings-dropdown .combo-box-popup .list-cell     { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-background-color: transparent; -fx-padding: 6 10; }
+.settings-dropdown .combo-box-popup .list-cell:hover    { -fx-background-color: rgba(212,175,55,0.08); }
 .settings-dropdown .combo-box-popup .list-cell:selected { -fx-background-color: rgba(212,175,55,0.14); -fx-text-fill: #D4AF37; }
 
-.settings-checkbox .box { -fx-background-color: #0d1924; -fx-border-color: #1a2e44; -fx-border-width: 1; -fx-border-radius: 2; -fx-background-radius: 2; }
-.settings-checkbox:selected .box { -fx-border-color: #D4AF37; }
-.settings-checkbox .mark { -fx-background-color: #D4AF37; }
+.settings-checkbox .box              { -fx-background-color: #0d1924; -fx-border-color: #1a2e44; -fx-border-width: 1; -fx-border-radius: 2; -fx-background-radius: 2; }
+.settings-checkbox:selected .box     { -fx-border-color: #D4AF37; }
+.settings-checkbox .mark             { -fx-background-color: #D4AF37; }
 
-/* Overlay */
+/* ── Overlay ─────────────────────────────────────────────────────────────── */
 
-.overlay-container { -fx-background-color: transparent; }
-.overlay-dimmer { -fx-background-color: rgba(5,10,18,0.78); }
+.overlay-container  { -fx-background-color: transparent; }
+.overlay-dimmer     { -fx-background-color: rgba(5,10,18,0.78); }
 
 .overlay-dialog {
     -fx-background-color: #111e30;
@@ -271,15 +269,15 @@
     -fx-cursor: hand;
     -fx-padding: 2 6;
 }
-.overlay-close-btn:hover { -fx-text-fill: #5a7a96; }
+.overlay-close-btn:hover   { -fx-text-fill: #5a7a96; }
 .overlay-close-btn:pressed { -fx-text-fill: #D4AF37; }
 
 .overlay-scroll,
-.overlay-scroll .viewport { -fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent; }
-.overlay-scroll .scroll-bar { -fx-background-color: transparent; -fx-opacity: 0.4; }
+.overlay-scroll .viewport  { -fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent; }
+.overlay-scroll .scroll-bar        { -fx-background-color: transparent; -fx-opacity: 0.4; }
 .overlay-scroll .scroll-bar .thumb { -fx-background-color: #1a2e44; -fx-background-radius: 2; }
 
-/* Bottom bar  */
+/* ── Bottom bar ──────────────────────────────────────────────────────────── */
 
 .bottom-bar {
     -fx-background-color: #0b1624;
@@ -289,13 +287,183 @@
 
 .bottombar-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #D4AF37;
+    -fx-text-fill: #2e4a62;
     -fx-border-color: transparent;
-    -fx-font-size: 35px;
+    -fx-font-size: 17px;
     -fx-cursor: hand;
     -fx-padding: 4 8;
-    -fx-pref-width: 50;
-    -fx-pref-height: 50;
+    -fx-pref-width: 34;
+    -fx-pref-height: 34;
 }
-.bottombar-btn:hover { -fx-text-fill: #D4AF37; -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.20), 8, 0.1, 0, 0); }
+.bottombar-btn:hover   { -fx-text-fill: #D4AF37; -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.20), 8, 0.1, 0, 0); }
 .bottombar-btn:pressed { -fx-text-fill: #b89620; -fx-effect: none; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Game Table
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Table background (felt green) ──────────────────────────────────────── */
+
+.game-table       { -fx-background-color: #08201a; }
+.table-header     { -fx-background-color: #061812; }
+.table-suits      { -fx-fill: #D4AF37; -fx-font-family: "Georgia"; -fx-font-size: 14px; -fx-opacity: 0.35; }
+
+/* ── Dealer area ─────────────────────────────────────────────────────────── */
+
+.dealer-area {
+    -fx-background-color: rgba(0,0,0,0.18);
+    -fx-border-color: rgba(212,175,55,0.20);
+    -fx-border-width: 0 0 1 0;
+}
+
+.dealer-label {
+    -fx-fill: #5a7a96;
+    -fx-font-family: "System";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+/* ── Player seat ─────────────────────────────────────────────────────────── */
+
+.player-seat {
+    -fx-background-color: rgba(0,0,0,0.22);
+    -fx-border-color: rgba(212,175,55,0.12);
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.player-seat-active {
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.28), 16, 0.15, 0, 0);
+}
+
+.seat-name       { -fx-text-fill: #3a6080; -fx-font-family: "Georgia"; -fx-font-size: 12px; }
+.seat-name-local { -fx-text-fill: #dce8f0; -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-font-weight: bold; }
+.seat-bet        { -fx-text-fill: #5a7a96; -fx-font-family: "Georgia"; -fx-font-size: 11px; }
+
+/* ── Hand total badge ────────────────────────────────────────────────────── */
+
+.total-badge {
+    -fx-background-color: #0d1924;
+    -fx-text-fill: #dce8f0;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 2 8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+}
+
+.total-badge-blackjack { -fx-text-fill: #D4AF37; -fx-border-color: #D4AF37; }
+.total-badge-bust      { -fx-text-fill: #c0392b; -fx-border-color: #6e1f18; }
+
+/* ── Notification popup ──────────────────────────────────────────────────── */
+
+.seat-notification {
+    -fx-background-color: #0d1924;
+    -fx-text-fill: #dce8f0;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 12;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+}
+
+.seat-notification-blackjack { -fx-text-fill: #D4AF37; -fx-border-color: #D4AF37; }
+.seat-notification-bust      { -fx-text-fill: #c0392b; -fx-border-color: #6e1f18; }
+.seat-notification-win       { -fx-text-fill: #27ae60; -fx-border-color: #1a5e35; }
+.seat-notification-push      { -fx-text-fill: #5a7a96; -fx-border-color: #1a2e44; }
+
+/* ── Timer ───────────────────────────────────────────────────────────────── */
+
+.timer-text {
+    -fx-fill: #dce8f0;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+
+.card-face {
+    -fx-background-color: #f5f0e0;
+    -fx-border-color: #c8c0a0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0.1, 1, 2);
+}
+
+.card-back {
+    -fx-background-color: #0f1e30;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0.1, 1, 2);
+}
+
+.card-rank      { -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-font-weight: bold; }
+.card-suit-small{ -fx-font-family: "Georgia"; -fx-font-size: 10px; }
+.card-suit-big  { -fx-font-family: "Georgia"; -fx-font-size: 28px; }
+.card-red       { -fx-fill: #b22222; }
+.card-black     { -fx-fill: #1a1a1a; }
+.card-back-pattern { -fx-fill: #D4AF37; -fx-font-size: 22px; -fx-opacity: 0.35; }
+
+/* ── Action bar ──────────────────────────────────────────────────────────── */
+
+.action-bar {
+    -fx-background-color: rgba(5,10,16,0.72);
+    -fx-border-color: rgba(212,175,55,0.15) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.action-btn {
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-padding: 10 26;
+}
+
+/* HIT, STAND — filled gold */
+.action-btn-primary {
+    -fx-background-color: #D4AF37;
+    -fx-text-fill: #08201a;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+}
+.action-btn-primary:hover   { -fx-background-color: #e8c84a; -fx-border-color: #e8c84a; }
+.action-btn-primary:pressed { -fx-background-color: #b89620; -fx-border-color: #b89620; -fx-effect: none; }
+.action-btn-primary:disabled{ -fx-opacity: 0.28; }
+
+/* DOUBLE, SPLIT — outlined gold */
+.action-btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D4AF37;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1.5;
+}
+.action-btn-secondary:hover   { -fx-background-color: rgba(212,175,55,0.08); }
+.action-btn-secondary:pressed { -fx-background-color: rgba(212,175,55,0.18); -fx-effect: none; }
+.action-btn-secondary:disabled{ -fx-opacity: 0.22; }
+
+/* ? help — ghost */
+.action-btn-help {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2e4a62;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-padding: 10 14;
+}
+.action-btn-help:hover   { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
+.action-btn-help:pressed { -fx-background-color: rgba(46,74,98,0.15); -fx-effect: none; }
