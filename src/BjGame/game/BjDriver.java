@@ -124,10 +124,13 @@ public class BjDriver extends Application {
         Debug.println("Showing game table...");
 
         // Test add players:
-        gameController.gameSession.players.clear();
-        gameController.gameSession.players.add(new Player.Dealer("Dealer", "", 0));          // index 0 — dealer slot
-        gameController.gameSession.players.add(new Player.HumanPlayer("Vincent", "", START_CASH)); // index 1
-        gameController.gameSession.players.add(new Player.HumanPlayer("Alice",   "", START_CASH)); // index 2
+        gameController.clearPlayers();
+        gameController.addPlayer(new Player.Dealer("Dealer", "", 0));
+        gameController.addPlayer(new Player.HumanPlayer("Vincent", "", START_CASH));
+        gameController.addPlayer(new Player.HumanPlayer("Sage", "", START_CASH));
+        gameController.addPlayer(new Player.HumanPlayer("Benjamin", "", START_CASH));
+        gameController.addPlayer(new Player.HumanPlayer("Vincent's clone", "", START_CASH));
+
         loggedInUsername = "Vincent";
 
         GameUI table = new GameUI();
@@ -145,9 +148,8 @@ public class BjDriver extends Application {
         table.setOnHelp(()   -> { /* show help overlay */ });
 
         gameController.setUI(table);
-        gameController.startRound();
-
         contentPane.getChildren().setAll(table.build());
+        gameController.startRound();
     }
 
 }

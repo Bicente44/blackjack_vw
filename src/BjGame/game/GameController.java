@@ -72,6 +72,16 @@ public class GameController {
         }
     }
 
+    public void addPlayer(Player p) {
+        gameSession.players.add(p);
+        gameSession.hands.add(new HandManager());
+    }
+
+    public void clearPlayers() {
+        gameSession.players.clear();
+        gameSession.hands.clear();
+    }
+
     /**
      * Method to deal with the first and second pass at BjGame.game start
      */
