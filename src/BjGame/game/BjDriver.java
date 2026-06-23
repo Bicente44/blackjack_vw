@@ -139,7 +139,7 @@ public class BjDriver extends Application {
         for (int i = 1; i < gameController.gameSession.players.size(); i++) {
             Player p = gameController.gameSession.players.get(i);
             boolean isLocal = p.getPlayerName().equals(loggedInUsername);
-            table.addSeat(p.getPlayerName(), isLocal);
+            table.addSeat(p.getPlayerName(), isLocal, p.getMoney());
         }
 
         table.setOnHit(()    -> gameController.hit());

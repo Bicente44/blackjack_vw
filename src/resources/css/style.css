@@ -390,32 +390,7 @@
     -fx-font-weight: bold;
 }
 
-/* ── Cards ───────────────────────────────────────────────────────────────── */
-
-.card-face {
-    -fx-background-color: #f5f0e0;
-    -fx-border-color: #c8c0a0;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0.1, 1, 2);
-}
-
-.card-back {
-    -fx-background-color: #0f1e30;
-    -fx-border-color: #D4AF37;
-    -fx-border-width: 1.5;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 6, 0.1, 1, 2);
-}
-
-.card-rank      { -fx-font-family: "Georgia"; -fx-font-size: 12px; -fx-font-weight: bold; }
-.card-suit-small{ -fx-font-family: "Georgia"; -fx-font-size: 10px; }
-.card-suit-big  { -fx-font-family: "Georgia"; -fx-font-size: 28px; }
-.card-red       { -fx-fill: #b22222; }
-.card-black     { -fx-fill: #1a1a1a; }
-.card-back-pattern { -fx-fill: #D4AF37; -fx-font-size: 22px; -fx-opacity: 0.35; }
+/* Cards drawn via Pane + absolute coords in CardView.java — no CSS needed */
 
 /* ── Action bar ──────────────────────────────────────────────────────────── */
 
@@ -467,3 +442,164 @@
 }
 .action-btn-help:hover   { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
 .action-btn-help:pressed { -fx-background-color: rgba(46,74,98,0.15); -fx-effect: none; }
+
+/* ── Bet UI ──────────────────────────────────────────────────────────────── */
+
+.bet-player-card {
+    -fx-background-color: #0d1924;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.bet-player-name {
+    -fx-text-fill: #dce8f0;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.bet-balance {
+    -fx-text-fill: #5a7a96;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 11px;
+}
+
+.bet-amount {
+    -fx-text-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.22), 8, 0.2, 0, 0);
+}
+
+/* Chip buttons (+5, +10, etc.) */
+.chip-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D4AF37;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-family: "System";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 8;
+    -fx-cursor: hand;
+}
+.chip-btn:hover   { -fx-background-color: rgba(212,175,55,0.10); }
+.chip-btn:pressed { -fx-background-color: rgba(212,175,55,0.20); -fx-effect: none; }
+
+.bet-clear-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2e4a62;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-family: "System";
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 8;
+    -fx-cursor: hand;
+}
+.bet-clear-btn:hover { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
+
+.section-divider {
+    -fx-background-color: #162840;
+}
+
+/* ── Bet widget (inside PlayerSeat swap zone) ────────────────────────────── */
+
+.bet-amount {
+    -fx-text-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.bet-balance-hint {
+    -fx-text-fill: #2e4a62;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+}
+
+/* Add chips (+5 +10 etc) — gold outlined */
+.chip-btn-add {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D4AF37;
+    -fx-border-color: #D4AF37;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-family: "System";
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 6;
+    -fx-cursor: hand;
+}
+.chip-btn-add:hover   { -fx-background-color: rgba(212,175,55,0.10); }
+.chip-btn-add:pressed { -fx-background-color: rgba(212,175,55,0.22); -fx-effect: none; }
+
+/* Remove chips (-5 -10 etc) — dim outlined */
+.chip-btn-remove {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3a5870;
+    -fx-border-color: #1a2e44;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-font-family: "System";
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 6;
+    -fx-cursor: hand;
+}
+.chip-btn-remove:hover   { -fx-text-fill: #5a7a96; -fx-border-color: #2e4a62; }
+.chip-btn-remove:pressed { -fx-background-color: rgba(46,74,98,0.15); -fx-effect: none; }
+
+.bet-clear-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2a3f52;
+    -fx-border-color: transparent;
+    -fx-font-family: "System";
+    -fx-font-size: 9px;
+    -fx-padding: 2 0;
+    -fx-cursor: hand;
+    -fx-underline: false;
+}
+.bet-clear-btn:hover { -fx-text-fill: #5a7a96; }
+
+/* Waiting / confirmed states shown on inactive seats during bet phase */
+.seat-waiting-label {
+    -fx-text-fill: #1e3a52;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+}
+
+.seat-confirmed-bet {
+    -fx-text-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.65;
+}
+
+/* ── Intermission bar ────────────────────────────────────────────────────── */
+
+.intermission-bar {
+    -fx-background-color: rgba(5,10,16,0.72);
+    -fx-border-color: rgba(212,175,55,0.15) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.intermission-label {
+    -fx-text-fill: #D4AF37;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(212,175,55,0.20), 10, 0.2, 0, 0);
+}
